@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SVG Testing</title>
+    <style>
+		.grey {
+			background-color: rgb(100,100,100);
+			color: white;
+		}
+		.container {
+			text-align: center;
+			padding: 15px;
+			position:relative;
+		}
+		.caption {
+			border-top: black 1px solid;
+			padding-top: 5px;
+			
+		}
+		.main{
+			width:50em;
+		}
+		#feature-text {
+			position: absolute;
+			left:0;
+			top: 0; 
+			z-index:-1;
+			margin:20px;
+			color: rgb(100,100,100);
+		}
+    </style>
+  </head>
+  <body>
+    <h1>This is a collection of SVG experiments</h1>
+    <div id="container" class="main">
+		<div id="triangle-container" class="container grey">
+			<svg id="triangle" width="30" height="30">
+				<path fill="white" stroke="white" d="M 5 5 l 10 15 l 10 -15"/>
+			</svg>
+			<div class="caption">
+				This is a test of the flashing triangle that appears on the opening screen.
+			</div>
+		</div>
+		<div id="star-container" class="container">
+			<div class="caption">
+				This is a test of creating the rotating stars used in some of the graphs.
+			</div>
+		</div>
+		<div id="gradient-container" class="container">
+			<div height="300px" style="height:300px;overflow:hidden">
+				<svg width="100%" height="300">
+				  <defs>
+					<linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+					  <stop offset="0%" style="stop-color:rgb(100,100,100);stop-opacity:1" />
+					  <stop offset="35%" style="stop-color:rgb(255,255,255);stop-opacity:0" />
+					  <stop offset="50%" style="stop-color:rgb(255,255,255);stop-opacity:0" />
+					  <stop offset="65%" style="stop-color:rgb(255,255,255);stop-opacity:0" />
+					  <stop offset="100%" style="stop-color:rgb(100,100,100);stop-opacity:1" />
+					</linearGradient>
+				  </defs>
+				  <rect width="100%" height="300" fill="url(#grad1)" />
+				  <div id="feature-text">
+					<p>
+					Sacramento splittail mudskipper nurseryfish ghoul, "nase desert pupfish wasp fish spiny dogfish." European perch dhufish lagena moonfish--Rasbora mackerel telescopefish tailor ballan wrasse Red salmon firefish marine hatchetfish Black scalyfin flier ruffe, clownfish, morid cod yellow-eye mullet.
+					</p>
+					<p>
+						Gopher rockfish sheepshead fire bar danio sturgeon goblin shark zebra trout gurnard tiger shark ghost knifefish? Triplefin blenny bowfin electric stargazer scaleless black dragonfish, Indian mul mojarra Cherubfish trumpeter, carp. Rattail slipmouth anglerfish round stingray large-eye bream freshwater eel. Collared dogfish naked-back knifefish platyfish three spot gourami; sailback scorpionfish bristlenose catfish opah sunfish barracuda. Three-toothed puffer candlefish triplefin blenny delta smelt candiru false trevally bonytail chub, "loosejaw; conger eel, dottyback." Sea catfish velvet-belly shark, razorfish; dragonet Black scabbardfish Oriental loach houndshark sea bream graveldiver jewfish lampfish--snailfish sarcastic fringehead. Poolfish ghost fish glowlight danio, moonfish Atlantic cod, longnose chimaera grunion Black sea bass: grayling morid cod.
+					</p>
+				  </div>
+				</svg>
+			</div>
+			<div class="caption">
+				This is a test of the transparent overlay used to simulate the fade in/out of text.
+			</div>
+		</div>
+	</div>
+	<script src="./driver.js"></script>
+  </body>
+</html>
