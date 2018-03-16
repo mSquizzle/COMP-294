@@ -6,5 +6,5 @@ This is my repository for COMP 294. The goal of this project is to convert an ex
 
 - [Initial SVG Test](https://msquizzle.github.io/COMP-294/SVG-SAMPLES/svg-samples.html)
 - ~_Chart 1_~ _coming soon_
-- ~_Chart 2]~ _coming soon_
+- ~_Chart 2_~ _coming soon_
 - ~_Chart 3_~ _coming soon_
