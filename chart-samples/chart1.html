@@ -8,6 +8,10 @@
 			background-color: rgb(100,100,100);
 			color: white;
 		}
+		.semi-grey {
+			background-color: rgb(100,100,100,.9);
+			color: white;
+		}
 		.container {
 			text-align: center;
 			padding: 15px;
@@ -32,6 +36,16 @@
 		line {
 			stroke:rgb(255,0,0);stroke-width:2
 		}
+		#tip {
+			position: absolute;
+			float: left;
+			border: 1px solid rgb(128,128,128,.5);
+			text-align: center;
+			padding: 5px;
+		}
+		.hidden{
+			display: none;
+		}
     </style>
   </head>
   <body>
@@ -45,6 +59,18 @@
 			</div>
 		</div>
 	</div>
+	<div id="tip" class="semi-grey hidden"></div>
+	<script>
+		//todo - consolidate and move into datapoint.js
+			var chartTitles = {
+				"0" : "Uninsured Americans - All Ages",
+				"1" : "Uninsured Americans Under 65",
+				"2" : "Uninsured Americans 18-64",
+				"3" : "Uninsured Americans Under 18",
+				"4" : "Unemployment Rate",
+				"5" : "Americans Who Did Not Seek Medical Care Due To Cost"
+			};
+	</script>
 	<script src="../js/datapoint.js"></script>
 	<script src="../js/chart.js"></script>
 	<script>
@@ -55,6 +81,7 @@
 				adultUninsured,
 				underEighteenUninsured,
 				unemployed
+				//gah add information for skipping treatment!
 				];
 			var dataMax = extractMax(firstChartGroup);
 			console.log(dataMax);
@@ -64,9 +91,9 @@
 			chartParams.width = parent.width.baseVal.value;
 			chartParams.chartParent = parent;
 			chartParams.maxVal = dataMax;
-			firstChartGroup.forEach(function(element) {
-				drawSeries(chartParams, element);
-});
+			firstChartGroup.forEach(function(element, i) {
+				drawSeries(chartParams, element, i);
+			});
 		});
 	</script>
 	</body>

@@ -1,6 +1,6 @@
 const svgns = "http://www.w3.org/2000/svg";
 
-function drawSeries(chartParams, data){
+function drawSeries(chartParams, data, id){
 	var dataPoints = Object.entries(data);
 	
 	var parentHeight = chartParams.height;
@@ -19,9 +19,16 @@ function drawSeries(chartParams, data){
 	circle.setAttribute("cx", startX);
 	circle.setAttribute("cy", startY);
 	circle.setAttribute("r", 5);
+	circle.setAttribute("data-series", id);
+	circle.setAttribute("data-label", dataPoints[0][0]);
+	circle.setAttribute("data-val", dataPoints[0][1]);
+	circle.addEventListener("mouseenter", setToolTip);
+	circle.addEventListener("mouseleave", clearToolTip);
+	circle.addEventListener("mousemove", moveToolTip);
 	circleList.append(circle);
-		
-	for (var i = 1; i < dataPoints.length; i++){
+	
+	var limit = dataPoints.length;
+	for (var i = 1; i < limit; i++){
 		var point = dataPoints[i];
 		var nextX = startX + placementStep;
 		var nextY = parentHeight - scale(point[1]);
@@ -29,30 +36,66 @@ function drawSeries(chartParams, data){
 		circle.setAttribute("fill", "red");
 		circle.setAttribute("cx", startX);
 		circle.setAttribute("cy", startY);
-		circle.setAttribute("r", 5);
+		circle.setAttribute("r", 5);		
+		circle.setAttribute("data-series", id);
+		circle.setAttribute("data-label", dataPoints[i][0]);
+		circle.setAttribute("data-val", point[1]);
+		circle.addEventListener("mouseenter", setToolTip);
+		circle.addEventListener("mouseleave", clearToolTip);
+		circle.addEventListener("mousemove", moveToolTip);
 		circleList.append(circle);
 	
 		var line = document.createElementNS(svgns, "line");
 		line.setAttribute("x1", startX);
 		line.setAttribute("y1", startY);
 		line.setAttribute("x2", nextX);
-	
 		line.setAttribute("y2", nextY);
+		line.setAttribute("data-series", id);
 
 		startX = nextX;
 		startY = nextY;
 		lineList.append(line);
 	}
 	var circle = document.createElementNS(svgns, "circle");
-		circle.setAttribute("fill", "red");
-		circle.setAttribute("cx", startX);
-		circle.setAttribute("cy", startY);
-		circle.setAttribute("r", 5);
-		circleList.append(circle);
+	circle.setAttribute("fill", "red");
+	circle.setAttribute("cx", startX);
+	circle.setAttribute("cy", startY);	
+	circle.setAttribute("data-series", id);
+	circle.setAttribute("data-label", dataPoints[limit-1][0]);
+	circle.setAttribute("data-val", dataPoints[limit-1][1]);
+	circle.addEventListener("mouseenter", setToolTip);
+	circle.addEventListener("mouseleave", clearToolTip);
+	circle.addEventListener("mousemove", moveToolTip);
+	circle.setAttribute("r", 5);
+	circleList.append(circle);
 	
 	chartParent.appendChild(lineList);
-	chartParent.appendChild(circleList);
-	
+	chartParent.appendChild(circleList);	
+};
+
+function setToolTip(event){
+	event.target.setAttribute("fill", "green");
+	var tip = document.getElementById("tip");
+	var data = event.target.dataset;
+	var series = data.series;
+	var seriesTitle = chartTitles[series];
+	tip.innerHTML = seriesTitle+"<br/>"+data.label +" - "+data.val;
+	console.log(event.x);
+	tip.classList.toggle("hidden");
+};
+
+function clearToolTip(event){
+	event.target.setAttribute("fill","red");
+	var tip = document.getElementById("tip");
+	tip.innerHTML="";	
+	tip.classList.toggle("hidden");
+};
+
+function moveToolTip(event){
+	var tip = document.getElementById("tip");
+	var offset = tip.offsetWidth;
+	tip.style.left = (event.x-offset/2)+"px";
+	tip.style.top = (event.y-50)+"px";	
 };
 
 function getScaleFunction(dataMin, dataMax, windowMin, windowMax, percentage){
