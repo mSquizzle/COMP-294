@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SVG Testing - First Chart</title>
+    <style>
+		.grey {
+			background-color: rgb(100,100,100);
+			color: white;
+		}
+		.container {
+			text-align: center;
+			padding: 15px;
+			position:relative;
+		}
+		.caption {
+			border-top: black 1px solid;
+			padding-top: 5px;
+			
+		}
+		#feature-text {
+			position: absolute;
+			left:0;
+			top: 0; 
+			z-index:-1;
+			margin:20px;
+			color: rgb(100,100,100);
+		}
+		svg {
+			border: 1px black solid;
+		}
+		line {
+			stroke:rgb(255,0,0);stroke-width:2
+		}
+    </style>
+  </head>
+  <body>
+    <h1>This is the First Chart</h1>
+    <div id="container" class="main container grey">
+		<div id="chart-container" class="container grey">
+			<svg id="chart" width="1000px" height="500px">	
+			</svg>
+			<div class="caption" >
+				This is a test of the first chart. There are no interactions.
+			</div>
+		</div>
+	</div>
+	<script src="../js/datapoint.js"></script>
+	<script src="../js/chart.js"></script>
+	<script>
+		window.addEventListener("load", function(event) {
+			var firstChartGroup = [
+				allAgeUninsured,
+				underSixtyFiveUninsured,
+				adultUninsured,
+				underEighteenUninsured,
+				unemployed
+				];
+			var dataMax = extractMax(firstChartGroup);
+			console.log(dataMax);
+			var parent = document.getElementById('chart');
+			var chartParams = {};
+			chartParams.height = parent.height.baseVal.value;
+			chartParams.width = parent.width.baseVal.value;
+			chartParams.chartParent = parent;
+			chartParams.maxVal = dataMax;
+			firstChartGroup.forEach(function(element) {
+				drawSeries(chartParams, element);
+});
+		});
+	</script>
+	</body>
+</html>
