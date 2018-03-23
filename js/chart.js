@@ -94,8 +94,9 @@ function clearToolTip(event){
 function moveToolTip(event){
 	var tip = document.getElementById("tip");
 	var offset = tip.offsetWidth;
+	var offsetY = 5 + tip.offsetHeight;
 	tip.style.left = (event.x-offset/2)+"px";
-	tip.style.top = (event.y-50)+"px";	
+	tip.style.top = (event.y - offsetY)+"px";	
 };
 
 function getScaleFunction(dataMin, dataMax, windowMin, windowMax, percentage){
