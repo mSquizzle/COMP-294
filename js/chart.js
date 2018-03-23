@@ -12,7 +12,7 @@ function drawSeries(chartParams, data){
 	var circleList = document.createDocumentFragment();
 	var	lineList = document.createDocumentFragment();
 	
-	var scale = getScaleFunction(0, max, 0, parentHeight);
+	var scale = getScaleFunction(0, max, 0, parentHeight, .9);
 	var startY = parentHeight - scale(dataPoints[0][1]);
 	var circle = document.createElementNS(svgns, "circle");
 	circle.setAttribute("fill", "red");
@@ -55,10 +55,11 @@ function drawSeries(chartParams, data){
 	
 };
 
-function getScaleFunction(dataMin, dataMax, windowMin, windowMax){
+function getScaleFunction(dataMin, dataMax, windowMin, windowMax, percentage){
 	return function(dataValue){
 		var dataRange = dataMax - dataMin;
 		var windowRange = windowMax - windowMin;
-		return (dataValue - dataMin) / dataRange * windowRange + windowMin;
+		var scaledVal = (dataValue - dataMin) / dataRange * windowRange + windowMin;
+		return percentage * scaledVal;
 	}
 };
