@@ -15,14 +15,14 @@ function drawSeries(chartParams, data, id){
 	var scale = getScaleFunction(0, max, 0, parentHeight, .9);
 	var startY = parentHeight - scale(dataPoints[0][1]);
 	var circle = document.createElementNS(svgns, "circle");
-	circle.setAttribute("fill", "red");
+	var formatter = getFormatter(chartParams);
 	circle.setAttribute("cx", startX);
 	circle.setAttribute("cy", startY);
 	circle.setAttribute("r", 5);
 	circle.setAttribute("data-series", id);
 	circle.setAttribute("class","series-"+id);
 	circle.setAttribute("data-label", dataPoints[0][0]);
-	circle.setAttribute("data-val", dataPoints[0][1]);
+	circle.setAttribute("data-val", formatter(dataPoints[0][1]));
 	circle.addEventListener("mouseenter", setToolTip);
 	circle.addEventListener("mouseleave", clearToolTip);
 	circle.addEventListener("mousemove", moveToolTip);
@@ -34,14 +34,13 @@ function drawSeries(chartParams, data, id){
 		var nextX = startX + placementStep;
 		var nextY = parentHeight - scale(point[1]);
 		circle = document.createElementNS(svgns, "circle");
-		circle.setAttribute("fill", "red");
 		circle.setAttribute("cx", startX);
 		circle.setAttribute("cy", startY);
 		circle.setAttribute("r", 5);		
 		circle.setAttribute("data-series", id);		
 		circle.setAttribute("class","series-"+id);
 		circle.setAttribute("data-label", dataPoints[i][0]);
-		circle.setAttribute("data-val", point[1]);
+		circle.setAttribute("data-val", formatter(point[1]));
 		circle.addEventListener("mouseenter", setToolTip);
 		circle.addEventListener("mouseleave", clearToolTip);
 		circle.addEventListener("mousemove", moveToolTip);
@@ -60,13 +59,12 @@ function drawSeries(chartParams, data, id){
 		lineList.append(line);
 	}
 	var circle = document.createElementNS(svgns, "circle");
-	circle.setAttribute("fill", "red");
 	circle.setAttribute("cx", startX);
 	circle.setAttribute("cy", startY);	
 	circle.setAttribute("data-series", id);
 	circle.setAttribute("class","series-"+id);
 	circle.setAttribute("data-label", dataPoints[limit-1][0]);
-	circle.setAttribute("data-val", dataPoints[limit-1][1]);
+	circle.setAttribute("data-val", formatter(dataPoints[limit-1][1]));
 	circle.addEventListener("mouseenter", setToolTip);
 	circle.addEventListener("mouseleave", clearToolTip);
 	circle.addEventListener("mousemove", moveToolTip);
@@ -78,7 +76,6 @@ function drawSeries(chartParams, data, id){
 };
 
 function setToolTip(event){
-	event.target.setAttribute("fill", "green");
 	var tip = document.getElementById("tip");
 	var data = event.target.dataset;
 	var series = data.series;
@@ -87,15 +84,33 @@ function setToolTip(event){
 	console.log(event.x);
 	//set zIndex really high
 	tip.classList.toggle("hidden");
+	setStar(event.target);
 };
 
+function getFormatter(chartConfig){
+	if(chartConfig.format === "percentage"){
+		return function(value){
+			return value + "%";
+		};
+	}
+	return function(value){ return value};
+}
+
+function setStar(target){
+	//todo - implement
+}
+
 function clearToolTip(event){
-	event.target.setAttribute("fill","red");
 	var tip = document.getElementById("tip");
 	tip.innerHTML="";
 	//set zIndex back to the series id
 	tip.classList.toggle("hidden");
+	clearStar(event.target);
 };
+
+function clearStar(target){
+	//todo - implement
+}
 
 function moveToolTip(event){
 	var tip = document.getElementById("tip");

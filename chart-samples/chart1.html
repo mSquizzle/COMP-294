@@ -119,6 +119,7 @@
 			chartParams.width = parent.width.baseVal.value;
 			chartParams.chartParent = parent;
 			chartParams.maxVal = dataMax;
+			chartParams.format = "percentage";
 			firstChartGroup.forEach(function(element, i) {
 				drawSeries(chartParams, element, i);
 			});
