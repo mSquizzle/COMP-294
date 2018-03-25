@@ -4,9 +4,15 @@
     <meta charset="utf-8">
     <title>SVG Testing - First Chart</title>
     <style>
+		body {			
+			font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+		}
 		.grey {
 			background-color: rgb(100,100,100);
 			color: white;
+		}
+		.axis {
+			text-align: center;
 		}
 		.semi-grey {
 			background-color: rgb(100,100,100,.875);
@@ -34,8 +40,9 @@
 			border: 1px black solid;
 		}
 		line {
-			stroke:rgb(255,0,0);stroke-width:2
+			fill:rgb(0,0,0);
 		}
+		
 		.tip{
 			position: absolute;
 			float: left;
@@ -111,18 +118,14 @@
 	<script src="../js/chart.js"></script>
 	<script>
 		window.addEventListener("load", function(event) {
-			var dataMax = extractMax(firstChartGroup);
-			console.log(dataMax);
 			var parent = document.getElementById('chart');
 			var chartParams = {};
 			chartParams.height = parent.height.baseVal.value;
 			chartParams.width = parent.width.baseVal.value;
 			chartParams.chartParent = parent;
-			chartParams.maxVal = dataMax;
+			chartParams.maxVal = 25;
 			chartParams.format = "percentage";
-			firstChartGroup.forEach(function(element, i) {
-				drawSeries(chartParams, element, i);
-			});
+			drawChart(chartParams, firstChartGroup);
 		});
 	</script>
 	</body>
