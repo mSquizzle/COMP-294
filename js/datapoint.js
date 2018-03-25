@@ -70,6 +70,21 @@ var underEighteenUninsured = {
     "2017": 5.3
 };
 
+var skippedCare = {
+	"2006": 5.8,
+    "2007": 5.8,
+    "2008": 6.5,
+    "2009": 6.9,
+    "2010": 6.9,
+    "2011": 6.5,
+    "2012": 6.2,
+    "2013": 5.9,
+    "2014": 5.3,
+    "2015": 4.5,
+    "2016": 4.4,
+    "2017": 4.3
+};
+
 var unemployed = {
 	"2006": 4.4,
     "2007": 5.0,
@@ -84,6 +99,24 @@ var unemployed = {
     "2016": 4.7,
     "2017": 4.1
 };
+
+var chartTitles = {
+	"0" : "Uninsured Americans - All Ages",
+	"1" : "Uninsured Americans Under 65",
+	"2" : "Uninsured Americans 18-64",
+	"3" : "Uninsured Americans Under 18",
+	"4" : "Americans Who Did Not Seek Medical Care Due To Cost",
+	"5" : "Unemployment Rate"
+};
+
+var firstChartGroup = [
+	allAgeUninsured,
+	underSixtyFiveUninsured,
+	adultUninsured,
+	underEighteenUninsured,
+	skippedCare,
+	unemployed
+];
 
 
 function extractMax(dataSets){

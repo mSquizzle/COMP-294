@@ -20,6 +20,7 @@ function drawSeries(chartParams, data, id){
 	circle.setAttribute("cy", startY);
 	circle.setAttribute("r", 5);
 	circle.setAttribute("data-series", id);
+	circle.setAttribute("class","series-"+id);
 	circle.setAttribute("data-label", dataPoints[0][0]);
 	circle.setAttribute("data-val", dataPoints[0][1]);
 	circle.addEventListener("mouseenter", setToolTip);
@@ -37,7 +38,8 @@ function drawSeries(chartParams, data, id){
 		circle.setAttribute("cx", startX);
 		circle.setAttribute("cy", startY);
 		circle.setAttribute("r", 5);		
-		circle.setAttribute("data-series", id);
+		circle.setAttribute("data-series", id);		
+		circle.setAttribute("class","series-"+id);
 		circle.setAttribute("data-label", dataPoints[i][0]);
 		circle.setAttribute("data-val", point[1]);
 		circle.addEventListener("mouseenter", setToolTip);
@@ -50,6 +52,7 @@ function drawSeries(chartParams, data, id){
 		line.setAttribute("y1", startY);
 		line.setAttribute("x2", nextX);
 		line.setAttribute("y2", nextY);
+		line.setAttribute("class","series-"+id);
 		line.setAttribute("data-series", id);
 
 		startX = nextX;
@@ -61,6 +64,7 @@ function drawSeries(chartParams, data, id){
 	circle.setAttribute("cx", startX);
 	circle.setAttribute("cy", startY);	
 	circle.setAttribute("data-series", id);
+	circle.setAttribute("class","series-"+id);
 	circle.setAttribute("data-label", dataPoints[limit-1][0]);
 	circle.setAttribute("data-val", dataPoints[limit-1][1]);
 	circle.addEventListener("mouseenter", setToolTip);
@@ -81,13 +85,15 @@ function setToolTip(event){
 	var seriesTitle = chartTitles[series];
 	tip.innerHTML = seriesTitle+"<br/>"+data.label +" - "+data.val;
 	console.log(event.x);
+	//set zIndex really high
 	tip.classList.toggle("hidden");
 };
 
 function clearToolTip(event){
 	event.target.setAttribute("fill","red");
 	var tip = document.getElementById("tip");
-	tip.innerHTML="";	
+	tip.innerHTML="";
+	//set zIndex back to the series id
 	tip.classList.toggle("hidden");
 };
 

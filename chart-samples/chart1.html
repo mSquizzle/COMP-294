@@ -9,7 +9,7 @@
 			color: white;
 		}
 		.semi-grey {
-			background-color: rgb(100,100,100,.9);
+			background-color: rgb(100,100,100,.875);
 			color: white;
 		}
 		.container {
@@ -36,6 +36,20 @@
 		line {
 			stroke:rgb(255,0,0);stroke-width:2
 		}
+		.tip{
+			position: absolute;
+			float: left;
+			border: 1px solid rgb(128,128,128,.5);
+			text-align: center;
+			padding: 5px;
+		}
+		#key-tip{
+			position: absolute;
+			float: left;
+			border: 1px solid rgb(128,128,128,.5);
+			text-align: center;
+			padding: 5px;
+		}
 		#tip {
 			position: absolute;
 			float: left;
@@ -45,6 +59,38 @@
 		}
 		.hidden{
 			display: none;
+		}
+			
+		.series-0 {
+			fill : rgb(37, 186, 44);
+			stroke : rgb(37, 186, 44);
+		}
+		
+		.series-1 {
+			fill : rgb(0, 122, 34);
+			stroke : rgb(0, 122, 34);
+		
+		}
+		
+		.series-2 {
+			fill: rgb(41, 206, 0);
+			stroke: rgb(41, 206, 0);
+		}
+		.series-3 {
+			fill: rgb(234, 255, 5);
+			stroke: rgb(234, 255, 5);
+		
+		}
+		.series-4 {
+			fill: rgb(147, 2, 61);
+			stroke: rgb(147, 2, 61);
+		}
+		.series-5 {
+			fill: rgb(5, 97, 240);
+			stroke: rgb(5, 97, 240);
+		}	
+		.star {
+			fill: (255,255,255);
 		}
     </style>
   </head>
@@ -59,30 +105,12 @@
 			</div>
 		</div>
 	</div>
-	<div id="tip" class="semi-grey hidden"></div>
-	<script>
-		//todo - consolidate and move into datapoint.js
-			var chartTitles = {
-				"0" : "Uninsured Americans - All Ages",
-				"1" : "Uninsured Americans Under 65",
-				"2" : "Uninsured Americans 18-64",
-				"3" : "Uninsured Americans Under 18",
-				"4" : "Unemployment Rate",
-				"5" : "Americans Who Did Not Seek Medical Care Due To Cost"
-			};
-	</script>
+	<div id="tip" class="semi-grey tip hidden"></div>
+	<div id="key-tip" class="semi-grey tip">This is a key tool tip</div>
 	<script src="../js/datapoint.js"></script>
 	<script src="../js/chart.js"></script>
 	<script>
 		window.addEventListener("load", function(event) {
-			var firstChartGroup = [
-				allAgeUninsured,
-				underSixtyFiveUninsured,
-				adultUninsured,
-				underEighteenUninsured,
-				unemployed
-				//gah add information for skipping treatment!
-				];
 			var dataMax = extractMax(firstChartGroup);
 			console.log(dataMax);
 			var parent = document.getElementById('chart');
