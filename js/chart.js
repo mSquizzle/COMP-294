@@ -58,6 +58,26 @@ function drawChart(chartParams, dataSet){
 		lineList.appendChild(line);
 		lineList.appendChild(text);
 	}
+	line = document.createElementNS(svgns, "line");
+	line.setAttribute("x1", leftAxis);
+	line.setAttribute("y1", parentHeight);
+	line.setAttribute("x2", rightAxis);
+	line.setAttribute("y2", parentHeight);
+	line.setAttribute("class", "axis");
+	line.setAttribute("stroke", "black");
+	lineList.appendChild(line);
+	
+	var stepSize = dataAreaWidth / (chartParams.keys.length-1);
+	var middle = parentHeight - (parentHeight - bottom) / 2.0;
+	for(var i = 0; i < chartParams.keys.length; i++){
+		var text = document.createElementNS(svgns, "text");
+		text.innerHTML = chartParams.keys[i];
+		text.setAttribute("x", i * stepSize + leftAxis);
+		text.setAttribute("y", middle);
+		text.setAttribute("class", "axis key");
+		lineList.appendChild(text);
+	}
+	
 	chartParent.appendChild(lineList);
 		
 	dataSet.forEach(function(element, i){
