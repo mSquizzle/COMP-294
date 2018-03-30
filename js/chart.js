@@ -155,6 +155,7 @@ function drawKey(keyX, keyY, series){
 	square.setAttribute("data-series", series);
 	square.addEventListener("mouseenter", setKeyToolTip);
 	square.addEventListener("mouseleave", clearKey);
+	square.addEventListener("click", handleKeyClick);
 	
 	key.setAttribute("x", keyX);
 	key.setAttribute("y", keyY);
@@ -238,6 +239,21 @@ function drawSeries(chartParams, bottom, top, data, id){
 	chartParent.appendChild(lineList);
 	chartParent.appendChild(circleList);	
 };
+
+function handleKeyClick(event){
+	var key = event.target;
+	var series = key.dataset.series;
+	var chartParent = document.getElementById("chart");
+	var children = chartParent.children;
+	console.log(children);
+	for(var i = 0; i < children.length; i++){
+		var tester = children[i];
+		if(tester.classList.contains("series-"+series) && tester.id !== "star"){
+			tester.classList.toggle("hidden");
+		}
+	}
+}
+
 
 function setToolTip(event){
 	var tip = document.getElementById("tip");
