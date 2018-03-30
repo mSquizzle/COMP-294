@@ -132,17 +132,43 @@
 		rect {
 			stroke: black !important; 
 			stroke-width: 2;
+			-webkit-animation: crossanimate 1s;  
+			-webkit-animation-iteration-count: infinite;
+			animation: crossanimate 1s;
+			animation-iteration-count: infinite
+			-webkit-animation: crossanimate 1s;  
+			-webkit-animation-iteration-count: infinite;
+			animation: crossanimate 1s;
+			animation-iteration-count: infinite;
 		}
 		path.cross {
 			stroke: black !important; 
 			stroke-width: 2;
 			pointer-events:none;
 		}
-		rect.hidesib + path.cross {
-			display:none;
-			pointer-events:none;
-		}
 		
+		rect:hover, rect:hover + path.cross{
+			-webkit-animation: mymove 1s;
+			-webkit-animation-iteration-count: infinite;
+			animation: mymove 1s;
+			animation-iteration-count: infinite;
+		}
+
+		@-webkit-keyframes mymove {
+			from {stroke-width:1;
+			stroke:black}
+			to {top: 200px;
+			stroke:white;
+			stroke-width:2;}
+		}
+
+		@keyframes mymove {
+			from {stroke-width:1;
+			stroke:black}
+			to {top: 200px;
+			stroke:white;
+			stroke-width:2;}
+		}	
     </style>
   </head>
   <body>

@@ -157,7 +157,7 @@ function drawKey(keyX, keyY, series){
 	label.innerHTML = keyLabels[series];
 	square.setAttribute("width", 10);
 	square.setAttribute("height", 10);	
-	square.setAttribute("class", "series-"+series);
+	square.setAttribute("class", "hidesib series-"+series);
 	square.setAttribute("data-series", series);
 	square.addEventListener("mouseenter", setKeyToolTip);
 	square.addEventListener("mouseleave", clearKey);
