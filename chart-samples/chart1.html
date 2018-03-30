@@ -133,6 +133,16 @@
 			stroke: black !important; 
 			stroke-width: 2;
 		}
+		path.cross {
+			stroke: black !important; 
+			stroke-width: 2;
+			pointer-events:none;
+		}
+		rect.hidesib + path.cross {
+			display:none;
+			pointer-events:none;
+		}
+		
     </style>
   </head>
   <body>

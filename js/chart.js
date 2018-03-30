@@ -145,6 +145,12 @@ function drawKey(keyX, keyY, series){
 	var key = document.createElementNS(svgns, "svg");
 	var square = document.createElementNS(svgns, "rect");
 	var label = document.createElementNS(svgns, "text");
+	var cross = document.createElementNS(svgns, "path");
+	
+	cross.setAttribute("d", "M 0,0 L 10,10 M 10,0 L 0,10" )
+	cross.setAttribute("x", 15);
+	cross.setAttribute("y", 10);
+	cross.setAttribute("class", "cross");
 	label.setAttribute("x", 15);
 	label.setAttribute("y", 10);
 	label.setAttribute("class", "key");
@@ -160,6 +166,7 @@ function drawKey(keyX, keyY, series){
 	key.setAttribute("x", keyX);
 	key.setAttribute("y", keyY);
 	key.appendChild(square);
+	key.appendChild(cross);
 	key.appendChild(label);
 	return key;
 }
@@ -245,15 +252,14 @@ function handleKeyClick(event){
 	var series = key.dataset.series;
 	var chartParent = document.getElementById("chart");
 	var children = chartParent.children;
-	console.log(children);
 	for(var i = 0; i < children.length; i++){
 		var tester = children[i];
 		if(tester.classList.contains("series-"+series) && tester.id !== "star"){
 			tester.classList.toggle("hidden");
 		}
 	}
+	key.classList.toggle("hidesib");
 }
-
 
 function setToolTip(event){
 	var tip = document.getElementById("tip");
