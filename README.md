@@ -13,18 +13,19 @@ This is my repository for COMP 294. The goal of this project is to convert an ex
 ### Complete Charts
 - ~Draw series~
 - ~Add tool-tip on hover~
-- Draw axes
-- Add labels/titles
+- ~Draw axes~
+- ~Add labels/titles~
 - ~Add colors to series~
-- Add keys
+- ~Add keys~
 - Add hover animation to keys
-- Add tooltip to keys
+- ~Add tooltip to keys~
 - Add click functionality to keys
 - Add ability to draw sections of charts (animations)
 
 ### Overall
 
 - Add overall state configuration
+- Animate initial drawing of charts
 - Add listeners to update state
 - Show/add/move charts based on state
 - Documentation
