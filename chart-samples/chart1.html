@@ -70,13 +70,16 @@
 		#key-tip{
 			position: absolute;
 			float: center;
-			top: 30%;
+			top: 15%;
+			left: 25%;
+			width: 50%;
 			border: 1px solid rgb(0,0,0,.5);
-			background: rgb(255,255,255,.5);
+			background: rgb(225,225,225,.75);
 			color: rgb(0,0,0);
 			text-align: center;
 			padding: 5px;
-			pointer-events: none
+			pointer-events: none;
+			font-size: 12px;
 		}
 		#tip {
 			position: absolute;
@@ -137,6 +140,7 @@
     <div id="container" class="main container grey">
 		<div id="chart-container" class="container grey">
 			<svg id="chart" width="1000px" height="500px">	
+				<div id="key-tip" class="semi-grey hidden"></div>
 			</svg>
 			<div class="caption" >
 				This is a test of the first chart. There are limited interactions.
@@ -144,7 +148,6 @@
 		</div>
 	</div>
 	<div id="tip" class="semi-grey tip hidden"></div>
-	<div id="key-tip" class="semi-grey tip hidden">This is a key tool tip</div>
 	<script src="../js/star.js"></script>
 	<script src="../js/datapoint.js"></script>
 	<script src="../js/chart.js"></script>
