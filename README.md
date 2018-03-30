@@ -11,15 +11,15 @@ This is my repository for COMP 294. The goal of this project is to convert an ex
 ## Remaining Tasks
 
 ### Complete Charts
-- ~Draw series~
-- ~Add tool-tip on hover~
-- ~Draw axes~
-- ~Add labels/titles~
-- ~Add colors to series~
-- ~Add keys~
+- _~~Draw series~~_
+- _~~Add tool-tip on hover~~_
+- _~~Draw axes~~_
+- _~~Add labels/titles~~_
+- _~~Add colors to series~~_
+- _~~Add keys~~_
 - Add hover animation to keys
-- ~Add tooltip to keys~
-- Add click functionality to keys
+- _~~Add tooltip to keys~~_
+- _~~Add click functionality to keys~~_
 - Add ability to draw sections of charts (animations)
 
 ### Overall
