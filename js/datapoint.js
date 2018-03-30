@@ -100,6 +100,8 @@ var unemployed = {
     "2017": 4.1
 };
 
+//todo - combine into single object to represent state
+
 var chartTitles = {
 	"0" : "Uninsured Americans - All Ages",
 	"1" : "Uninsured Americans Under 65",
@@ -108,6 +110,33 @@ var chartTitles = {
 	"4" : "Americans Who Did Not Seek Medical Care Due To Cost",
 	"5" : "Unemployment Rate"
 };
+
+var visibleCharts = {
+	"0" : true,
+	"1" : false,
+	"2" : false,
+	"3" : false,
+	"4" : true,
+	"5" : true
+};
+
+var keyLabels = {
+	"0" : "Percentage of Uninsured Americans",
+	"1" : "Under 65",
+	"2" : "18-64",
+	"3" : "Under 18",
+	"4" : "Percentage of Americans that Skipped <br/>Treatment Due to Medical Costs",
+	"5" : "US Unemployment Rate"
+};
+
+var keyToolTips = {
+	"0" : "  A person was defined as uninsured if he or she did not have any private health insurance, Medicare, Medicaid, Children’s Health Insurance Program, state–sponsored or other government–sponsored health plan, or military plan at the time of interview. A person was also defined as uninsured if he or she had only Indian Health Service coverage or had only a private plan that paid for one type of service, such as accidents or dental care.",
+	"1" : "  A person was defined as uninsured if he or she did not have any private health insurance, Medicare, Medicaid, Children’s Health Insurance Program, state–sponsored or other government–sponsored health plan, or military plan at the time of interview. A person was also defined as uninsured if he or she had only Indian Health Service coverage or had only a private plan that paid for one type of service, such as accidents or dental care.",
+	"2" : "  A person was defined as uninsured if he or she did not have any private health insurance, Medicare, Medicaid, Children’s Health Insurance Program, state–sponsored or other government–sponsored health plan, or military plan at the time of interview. A person was also defined as uninsured if he or she had only Indian Health Service coverage or had only a private plan that paid for one type of service, such as accidents or dental care.",
+	"3" : "  A person was defined as uninsured if he or she did not have any private health insurance, Medicare, Medicaid, Children’s Health Insurance Program, state–sponsored or other government–sponsored health plan, or military plan at the time of interview. A person was also defined as uninsured if he or she had only Indian Health Service coverage or had only a private plan that paid for one type of service, such as accidents or dental care.",
+	"4" : "    Percentage of persons of all ages who failed to obatin needed edical care due to the cost at soe time during the past 12 months.",
+	"5" : "    A person who is jobless, looking for a job, and available for work is unemployed. The unemployment rate is the total number of enemployed individuals divded by the total number of persons in thet workforce (those who are either working or looking for a job)."	
+}
 
 var firstChartGroup = [
 	allAgeUninsured,

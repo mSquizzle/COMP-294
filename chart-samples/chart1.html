@@ -11,6 +11,12 @@
 			background-color: rgb(100,100,100);
 			color: white;
 		}
+		tspan {
+			clear: both;
+		}
+		.key{
+			font-size:10px;
+		}
 		.axis {
 			text-align: center;
 			stroke-width: .5;
@@ -50,7 +56,10 @@
 		line {
 			fill:rgb(0,0,0);
 		}
-		
+		.secret{
+			z-index:100;
+			opacity:0;
+		}
 		.tip{
 			position: absolute;
 			float: left;
@@ -60,10 +69,14 @@
 		}
 		#key-tip{
 			position: absolute;
-			float: left;
-			border: 1px solid rgb(128,128,128,.5);
+			float: center;
+			top: 30%;
+			border: 1px solid rgb(0,0,0,.5);
+			background: rgb(255,255,255,.5);
+			color: rgb(0,0,0);
 			text-align: center;
 			padding: 5px;
+			pointer-events: none
 		}
 		#tip {
 			position: absolute;
@@ -71,6 +84,7 @@
 			border: 1px solid rgb(128,128,128,.5);
 			text-align: center;
 			padding: 5px;
+			pointer-events: none
 		}
 		.hidden{
 			display: none;
@@ -84,7 +98,6 @@
 		.series-1 {
 			fill : rgb(0, 122, 34);
 			stroke : rgb(0, 122, 34);
-		
 		}
 		
 		.series-2 {
@@ -94,18 +107,28 @@
 		.series-3 {
 			fill: rgb(234, 255, 5);
 			stroke: rgb(234, 255, 5);
-		
 		}
 		.series-4 {
 			fill: rgb(147, 2, 61);
-			stroke: rgb(147, 2, 61);
+			stroke: rgb(147, 2, 61);			
 		}
 		.series-5 {
 			fill: rgb(5, 97, 240);
 			stroke: rgb(5, 97, 240);
-		}	
+		}
 		.star {
 			fill: (255,255,255);
+			stroke-width: 1 !important;
+			pointer-events: none;
+			z-index: 10;
+		}
+		polygon{
+			pointer-events: none;
+			z-index: 10;
+		}
+		rect {
+			stroke: black !important; 
+			stroke-width: 2;
 		}
     </style>
   </head>
@@ -121,7 +144,8 @@
 		</div>
 	</div>
 	<div id="tip" class="semi-grey tip hidden"></div>
-	<div id="key-tip" class="semi-grey tip">This is a key tool tip</div>
+	<div id="key-tip" class="semi-grey tip hidden">This is a key tool tip</div>
+	<script src="../js/star.js"></script>
 	<script src="../js/datapoint.js"></script>
 	<script src="../js/chart.js"></script>
 	<script>
@@ -137,6 +161,7 @@
 			chartParams.format = "percentage";
 			chartParams.keys = ["2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017"];
 			drawChart(chartParams, firstChartGroup);
+			buildStar("chart", "star", 5, 10);
 		});
 	</script>
 	</body>

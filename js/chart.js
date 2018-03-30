@@ -4,6 +4,8 @@ function drawChart(chartParams, dataSet){
 	var parentHeight = chartParams.height;
 	var parentWidth = chartParams.width;
 	var chartParent = chartParams.chartParent;
+	chartParent.setAttribute("data-origheight", parentHeight);
+	chartParent.setAttribute("data-origwidth", parentWidth);
 	var dataAreaWidth = .9 * parentWidth;
 	var axes =  document.createDocumentFragment();
 	var leftAxis = .05 * parentWidth;
@@ -78,12 +80,89 @@ function drawChart(chartParams, dataSet){
 		lineList.appendChild(text);
 	}
 	
+	var text = document.createElementNS(svgns, "text");
+	var title = chartParams.title;
+	if(chartParams.subtitle){
+		title = "<tspan>"+title
+		title += ":</tspan><tspan>" + chartParams.subtitle+"</tspan>";
+	}
+	text.innerHTML = title;
+	text.setAttribute("x", parentWidth/2.0);
+	text.setAttribute("y", top);
+	text.setAttribute("class", "axis key title");	
+	lineList.appendChild(text);
+	
 	chartParent.appendChild(lineList);
 		
 	dataSet.forEach(function(element, i){
 		drawSeries(chartParams, bottom, top, element, i);
 	});
+	
+	window.addEventListener("resize", function(event){
+		var windowWidth = event.target.innerWidth;
+		var windowHeight = event.target.innerHeight;
+		var origWidth = chartParent.dataset.origwidth;
+		var origHeight = chartParent.dataset.origheight;
+		if(origWidth > windowWidth || origHeight > windowHeight){
+			var sample = newWidth / chartParent.dataset.origwidth;
+			var other = newHeight / chartParent.dataset.origheight;
+			var ratio = newWidth > newHeight ? sample : other;
+			chartParent.setAttribute("height", ratio * chartParent.dataset.origheight);
+			chartParent.setAttribute("width", ratio * chartParent.dataset.origwidth);
+			chartParent.setAttribute("transform", "scale("+ratio+")");
+		}else{
+			chartParent.setAttribute("height", origHeight);
+			chartParent.setAttribute("width",origWidth);
+			chartParent.setAttribute("transform", "");
+		}
+	});
+	
+	var keys = drawKeys(parentWidth, parentHeight);
+	chartParent.appendChild(keys);
 }
+
+
+function drawKeys(parentWidth, parentHeight){
+	var keyX = .75 * parentWidth + 10;
+	var keyY = 50;
+	var keys = document.createDocumentFragment();
+	var uninsured = drawKey(keyX, keyY, "0");
+	var under65 = drawKey(keyX + 15, keyY+20, "1");
+	var adults = drawKey(keyX + 90, keyY+20, "2");
+	var children = drawKey(keyX + 150, keyY+20, "3");
+	var skippedCare = drawKey(keyX, keyY + 50, "4");
+	var unemployed = drawKey(keyX, keyY + 75, "5");
+	keys.append(uninsured);
+	keys.append(under65);
+	keys.append(adults);
+	keys.append(children);
+	keys.append(skippedCare);
+	keys.append(unemployed);
+	return keys;
+}
+
+function drawKey(keyX, keyY, series){
+	var key = document.createElementNS(svgns, "svg");
+	var square = document.createElementNS(svgns, "rect");
+	var label = document.createElementNS(svgns, "text");
+	label.setAttribute("x", 15);
+	label.setAttribute("y", 10);
+	label.setAttribute("class", "key");
+	label.innerHTML = keyLabels[series];
+	square.setAttribute("width", 10);
+	square.setAttribute("height", 10);	
+	square.setAttribute("class", "series-"+series);
+	square.setAttribute("data-series", series);
+	square.addEventListener("mouseenter", setKeyToolTip);
+	square.addEventListener("mouseleave", clearKey);
+	
+	key.setAttribute("x", keyX);
+	key.setAttribute("y", keyY);
+	key.appendChild(square);
+	key.appendChild(label);
+	return key;
+}
+
 
 function drawSeries(chartParams, bottom, top, data, id){
 	var dataPoints = Object.entries(data);
@@ -172,6 +251,16 @@ function setToolTip(event){
 	setStar(event.target);
 };
 
+function setKeyToolTip(event){
+	var tip = document.getElementById("key-tip");
+	var data = event.target.dataset;
+	var series = data.series;
+	tip.innerHTML = keyToolTips[series];
+	console.log(event.x);
+	//set zIndex really high
+	tip.classList.toggle("hidden");
+}
+
 function getFormatter(chartConfig){
 	if(chartConfig.format === "percentage"){
 		return function(value){
@@ -179,10 +268,6 @@ function getFormatter(chartConfig){
 		};
 	}
 	return function(value){ return value};
-}
-
-function setStar(target){
-	//todo - implement
 }
 
 function clearToolTip(event){
@@ -193,8 +278,10 @@ function clearToolTip(event){
 	clearStar(event.target);
 };
 
-function clearStar(target){
-	//todo - implement
+function clearKey(event){
+	var tip = document.getElementById("key-tip");
+	tip.innterHTML="";
+	tip.classList.toggle("hidden");
 }
 
 function moveToolTip(event){
