@@ -7,8 +7,14 @@ function drawChart(chartParams, dataSet){
 	chartParent.setAttribute("data-origheight", parentHeight);
 	chartParent.setAttribute("data-origwidth", parentWidth);
 	var dataAreaWidth = .9 * parentWidth;
+	if(chartParams.yAxisLabel){
+		dataAreaWidth = .8 * parentWidth;
+	}
 	var axes =  document.createDocumentFragment();
 	var leftAxis = .05 * parentWidth;
+	if(chartParams.yAxisLabel){
+		leftAxis = .1 * parentWidth;
+	}
 	var rightAxis = parentWidth - leftAxis;
 	
 	var bottom = parentHeight * .9 ;
@@ -45,7 +51,8 @@ function drawChart(chartParams, dataSet){
 	if(chartParams.axisFormat){
 		formatter = getFormatter(chartParams.axisFormat);
 	}
-	var scale = getScaleFunction(0, chartParams.maxVal, bottom, top, 1);	
+	var scale = getScaleFunction(0, chartParams.maxVal, bottom, top, 1);
+	var leftAlign = chartParams.yAxisLabel ? (leftAxis - 15)/2 : 0;
 	for(var i = 0; i <= chartParams.maxVal; i+= labelStepSize){
 		start = scale(i);
 		line = document.createElementNS(svgns, "line");
@@ -56,7 +63,7 @@ function drawChart(chartParams, dataSet){
 		line.setAttribute("class", "axis");
 		line.setAttribute("stroke", "black");
 		var text =  document.createElementNS(svgns, "text");
-		text.setAttribute("x", 0);
+		text.setAttribute("x", leftAlign);
 		text.setAttribute("y", start);
 		text.setAttribute("class", "axis");
 		text.setAttribute("stroke", "black");
@@ -74,7 +81,7 @@ function drawChart(chartParams, dataSet){
 		line.setAttribute("class", "axis");
 		line.setAttribute("stroke", "black");
 		var text =  document.createElementNS(svgns, "text");
-		text.setAttribute("x", 0);
+		text.setAttribute("x", leftAlign);
 		text.setAttribute("y", start);
 		text.setAttribute("class", "axis");
 		text.setAttribute("stroke", "black");
@@ -102,17 +109,27 @@ function drawChart(chartParams, dataSet){
 		lineList.appendChild(text);
 	}
 	
-	var text = document.createElementNS(svgns, "text");
+	var titleText = document.createElementNS(svgns, "text");
 	var title = chartParams.title;
 	if(chartParams.subtitle){
 		title = "<tspan>"+title
 		title += ":</tspan><tspan>" + chartParams.subtitle+"</tspan>";
 	}
-	text.innerHTML = title;
-	text.setAttribute("x", parentWidth/2.0);
-	text.setAttribute("y", top);
-	text.setAttribute("class", "axis key title");	
-	lineList.appendChild(text);
+	titleText.innerHTML = title;
+	titleText.setAttribute("x", parentWidth/2.0);
+	titleText.setAttribute("y", top);
+	titleText.setAttribute("class", "axis key title");	
+	lineList.appendChild(titleText);
+	
+	var yAxisText = document.createElementNS(svgns, "text");
+	if(chartParams.yAxisLabel){
+		yAxisText.innerHTML = chartParams.yAxisLabel;
+		yAxisText.setAttribute("x", 0);
+		yAxisText.setAttribute("y", 0);
+		yAxisText.setAttribute("class", "axis key title");	
+		yAxisText.setAttribute("transform", "translate("+(leftAlign/2.0)+", "+(top+(bottom-top)/2.0)+") rotate(-90) ");
+		lineList.appendChild(yAxisText);		
+	}
 	
 	chartParent.appendChild(lineList);
 		
@@ -204,7 +221,13 @@ function drawSeries(chartParams, bottom, top, data, id){
 	var parentWidth = chartParams.width;
 	var chartParent = chartParams.chartParent;
 	var placementStep = .9 * parentWidth / (dataPoints.length);
+	if(chartParams.yAxisLabel){
+		placementStep = .8 * parentWidth / (dataPoints.length);
+	}
 	var startX = .05 * parentWidth;
+	if(chartParams.yAxisLabel){
+		startX = .1 * parentWidth;
+	}
 	var circleList = document.createDocumentFragment();
 	var	lineList = document.createDocumentFragment();
 	
