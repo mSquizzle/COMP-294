@@ -147,6 +147,10 @@ var firstChartGroup = [
 	unemployed
 ];
 
+var secondChartGroup = [
+	bankruptcies
+];
+
 
 function extractMax(dataSets){
 	var max = 0.0;

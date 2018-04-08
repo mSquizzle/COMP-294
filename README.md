@@ -6,7 +6,7 @@ This is my repository for COMP 294. The goal of this project is to convert an ex
 
 - [Initial SVG Test](https://msquizzle.github.io/COMP-294/SVG-SAMPLES/svg-samples.html)
 - [Chart 1](https://msquizzle.github.io/COMP-294/chart-samples/chart1.html)
-- ~_Chart 2_~ _coming soon_
+- [Chart 2](https://msquizzle.github.io/COMP-294/chart-samples/chart2.html)
 
 ## Remaining Tasks
 
@@ -17,7 +17,7 @@ This is my repository for COMP 294. The goal of this project is to convert an ex
 - _~~Add labels/titles~~_
 - _~~Add colors to series~~_
 - _~~Add keys~~_
-- Add hover animation to keys
+- _~~Add hover animation to keys~~_
 - _~~Add tooltip to keys~~_
 - _~~Add click functionality to keys~~_
 - Add ability to draw sections of charts (animations)

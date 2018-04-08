@@ -41,7 +41,11 @@ function drawChart(chartParams, dataSet){
 	lineList.appendChild(line);
 	var start = bottom;
 	var labelStepSize = chartParams.labelStepSize ? chartParams.labelStepSize : 5;
-	var scale = getScaleFunction(0, 25, bottom, top, 1);	
+	var formatter = getFormatter(chartParams.format);
+	if(chartParams.axisFormat){
+		formatter = getFormatter(chartParams.axisFormat);
+	}
+	var scale = getScaleFunction(0, chartParams.maxVal, bottom, top, 1);	
 	for(var i = 0; i <= chartParams.maxVal; i+= labelStepSize){
 		start = scale(i);
 		line = document.createElementNS(svgns, "line");
@@ -56,7 +60,25 @@ function drawChart(chartParams, dataSet){
 		text.setAttribute("y", start);
 		text.setAttribute("class", "axis");
 		text.setAttribute("stroke", "black");
-		text.innerHTML = i+"%";		
+		text.innerHTML = formatter(i);	
+		lineList.appendChild(line);
+		lineList.appendChild(text);
+	}
+	if(chartParams.showMaxVal){
+		start = scale(chartParams.maxVal);
+		line = document.createElementNS(svgns, "line");
+		line.setAttribute("x1", leftAxis);
+		line.setAttribute("y1", start);
+		line.setAttribute("x2", leftAxis-15);
+		line.setAttribute("y2", start);
+		line.setAttribute("class", "axis");
+		line.setAttribute("stroke", "black");
+		var text =  document.createElementNS(svgns, "text");
+		text.setAttribute("x", 0);
+		text.setAttribute("y", start);
+		text.setAttribute("class", "axis");
+		text.setAttribute("stroke", "black");
+		text.innerHTML = formatter(chartParams.maxVal);	
 		lineList.appendChild(line);
 		lineList.appendChild(text);
 	}
@@ -117,8 +139,10 @@ function drawChart(chartParams, dataSet){
 		}
 	});
 	
-	var keys = drawKeys(parentWidth, parentHeight);
-	chartParent.appendChild(keys);
+	if(chartParams.drawKeys){
+		var keys = drawKeys(parentWidth, parentHeight);
+		chartParent.appendChild(keys);
+	}
 }
 
 
@@ -187,7 +211,7 @@ function drawSeries(chartParams, bottom, top, data, id){
 	var scale = getScaleFunction(0, max, bottom, top, 1);
 	var startY = scale(dataPoints[0][1]);
 	var circle = document.createElementNS(svgns, "circle");
-	var formatter = getFormatter(chartParams);
+	var formatter = getFormatter(chartParams.format);
 	circle.setAttribute("cx", startX);
 	circle.setAttribute("cy", startY);
 	circle.setAttribute("r", 5);
@@ -283,11 +307,27 @@ function setKeyToolTip(event){
 	tip.classList.toggle("hidden");
 }
 
-function getFormatter(chartConfig){
-	if(chartConfig.format === "percentage"){
+function getFormatter(format){
+	console.log(format);
+	if(format === "percentage"){
 		return function(value){
 			return value + "%";
 		};
+	}else if (format === "million"){
+		return function(value){
+			if(value){
+				if(value < 1000){
+					return value;
+				}else{
+					if(value < 1000000){
+						return value / 1000 + "k"
+					}else{
+						return value / 1000000 + "m"
+					}
+				}
+			}
+			return "";
+		}
 	}
 	return function(value){ return value};
 }
