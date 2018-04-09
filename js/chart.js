@@ -220,9 +220,9 @@ function drawSeries(chartParams, bottom, top, data, id){
 	var parentHeight = chartParams.height;
 	var parentWidth = chartParams.width;
 	var chartParent = chartParams.chartParent;
-	var placementStep = .9 * parentWidth / (dataPoints.length);
+	var placementStep = .9 * parentWidth / (dataPoints.length-1);
 	if(chartParams.yAxisLabel){
-		placementStep = .8 * parentWidth / (dataPoints.length);
+		placementStep = .8 * parentWidth / (dataPoints.length-1);
 	}
 	var startX = .05 * parentWidth;
 	if(chartParams.yAxisLabel){
@@ -248,7 +248,7 @@ function drawSeries(chartParams, bottom, top, data, id){
 	circleList.append(circle);
 	
 	var limit = dataPoints.length;
-	for (var i = 0; i < limit; i++){
+	for (var i = 1; i < limit; i++){
 		var point = dataPoints[i];
 		var nextX = startX + placementStep;
 		var nextY = scale(point[1]);
@@ -350,6 +350,10 @@ function getFormatter(format){
 				}
 			}
 			return "";
+		}
+	}else if (format == "number"){
+		return function(value){
+			return Number(value).toLocaleString();
 		}
 	}
 	return function(value){ return value};
