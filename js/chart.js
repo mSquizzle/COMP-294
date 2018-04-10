@@ -213,7 +213,7 @@ function drawKey(keyX, keyY, series){
 }
 
 
-function drawSeries(chartParams, bottom, top, data, id){
+function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 	var dataPoints = Object.entries(data);
 	var max = chartParams.maxVal;
 	
@@ -235,11 +235,16 @@ function drawSeries(chartParams, bottom, top, data, id){
 	var startY = scale(dataPoints[0][1]);
 	var circle = document.createElementNS(svgns, "circle");
 	var formatter = getFormatter(chartParams.format);
+	var initialClass = "series-";
+	if(chartParams.incrementalDraw){
+		initialClass = "not-drawn series-";
+	}
 	circle.setAttribute("cx", startX);
 	circle.setAttribute("cy", startY);
 	circle.setAttribute("r", 5);
+	circle.setAttribute("id","series-"+id+"-circle-"+0);
 	circle.setAttribute("data-series", id);
-	circle.setAttribute("class","series-"+id);
+	circle.setAttribute("class",initialClass+id);
 	circle.setAttribute("data-label", dataPoints[0][0]);
 	circle.setAttribute("data-val", formatter(dataPoints[0][1]));
 	circle.addEventListener("mouseenter", setToolTip);
@@ -256,8 +261,9 @@ function drawSeries(chartParams, bottom, top, data, id){
 		circle.setAttribute("cx", startX);
 		circle.setAttribute("cy", startY);
 		circle.setAttribute("r", 5);		
+		circle.setAttribute("id","series-"+id+"-circle-"+i);
 		circle.setAttribute("data-series", id);		
-		circle.setAttribute("class","series-"+id);
+		circle.setAttribute("class",initialClass+id);
 		circle.setAttribute("data-label", dataPoints[i][0]);
 		circle.setAttribute("data-val", formatter(point[1]));
 		circle.addEventListener("mouseenter", setToolTip);
@@ -270,7 +276,8 @@ function drawSeries(chartParams, bottom, top, data, id){
 		line.setAttribute("y1", startY);
 		line.setAttribute("x2", nextX);
 		line.setAttribute("y2", nextY);
-		line.setAttribute("class","series-"+id);
+		line.setAttribute("class",initialClass+id);
+		line.setAttribute("id","series-"+id+"-line-"+i-1);
 		line.setAttribute("data-series", id);
 
 		startX = nextX;
@@ -281,7 +288,8 @@ function drawSeries(chartParams, bottom, top, data, id){
 	circle.setAttribute("cx", startX);
 	circle.setAttribute("cy", startY);	
 	circle.setAttribute("data-series", id);
-	circle.setAttribute("class","series-"+id);
+	circle.setAttribute("class","not-drawn series-"+id);
+	circle.setAttribute("id","series-"+id+"-circle-"+(limit-1));
 	circle.setAttribute("data-label", dataPoints[limit-1][0]);
 	circle.setAttribute("data-val", formatter(dataPoints[limit-1][1]));
 	circle.addEventListener("mouseenter", setToolTip);
@@ -289,7 +297,6 @@ function drawSeries(chartParams, bottom, top, data, id){
 	circle.addEventListener("mousemove", moveToolTip);
 	circle.setAttribute("r", 5);
 	circleList.append(circle);
-	
 	chartParent.appendChild(lineList);
 	chartParent.appendChild(circleList);	
 };
