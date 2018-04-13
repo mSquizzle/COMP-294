@@ -70,7 +70,6 @@ function handleFirstChart(){
 					lines[i].setAttribute("y1", nextY);
 					//var nextX = nodeGroups[index-1][i].cx.baseVal.value;
 					//var nextY = nodeGroups[index-1][i].cy.baseVal.value;
-					console.log(circles[i]);
 					circles[i].setAttribute("cx", nextX);
 					circles[i].setAttribute("cy", nextY);
 					circles[i].classList.add("not-drawn");
@@ -84,7 +83,7 @@ function handleFirstChart(){
 				init = 0;
 				index++;
 				if(index >= chartParams.keys.length){
-					index = chartParams.keys.length-1;
+					index = chartParams.keys.length;
 					init = 100;
 				}
 				for(var i = 0; i < firstChartGroup.length; i++){
