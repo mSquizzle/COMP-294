@@ -301,11 +301,11 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		circle.setAttribute("data-series", id);
 		circle.setAttribute("class","series-"+id+" pew");
 		circle.setAttribute("id","series-"+id+"-circle");
-		circle.setAttribute("data-label", dataPoints[0][0]);
-		circle.setAttribute("data-val", formatter(dataPoints[0][1]));
-		circle.addEventListener("mouseenter", setToolTip);
-		circle.addEventListener("mouseleave", clearToolTip);
-		circle.addEventListener("mousemove", moveToolTip);
+		//circle.setAttribute("data-label", dataPoints[0][0]);
+		//circle.setAttribute("data-val", formatter(dataPoints[0][1]));
+		//circle.addEventListener("mouseenter", setToolTip);
+		//circle.addEventListener("mouseleave", clearToolTip);
+		//circle.addEventListener("mousemove", moveToolTip);
 		circle.setAttribute("r", 5);
 		circleList.append(circle);
 		
