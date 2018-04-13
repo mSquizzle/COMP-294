@@ -20,7 +20,7 @@ This is my repository for COMP 294. The goal of this project is to convert an ex
 - _~~Add hover animation to keys~~_
 - _~~Add tooltip to keys~~_
 - _~~Add click functionality to keys~~_
-- Add ability to draw sections of charts (animations)
+- _~~Add ability to draw sections of charts~~_ (animations)
 
 ### Overall
 
