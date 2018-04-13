@@ -183,6 +183,9 @@
 				stroke-width:2;
 				}
 		}	
+		.pew {
+			fill : black !important;
+		}
     </style>
   </head>
   <body>
@@ -201,10 +204,12 @@
 	<script src="../js/star.js"></script>
 	<script src="../js/datapoint.js"></script>
 	<script src="../js/chart.js"></script>
+	<script src="../js/manager.js"></script>
 	<script>
+		var chartParams;
 		window.addEventListener("load", function(event) {
 			var parent = document.getElementById('chart');
-			var chartParams = {};
+			chartParams = {};
 			chartParams.height = parent.height.baseVal.value;
 			chartParams.width = parent.width.baseVal.value;
 			chartParams.chartParent = parent;
@@ -217,6 +222,7 @@
 			chartParams.keys = ["2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017"];
 			drawChart(chartParams, firstChartGroup);
 			buildStar("chart", "star", 5, 10);
+			handleFirstChart();
 		});
 	</script>
 	</body>

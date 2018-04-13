@@ -224,10 +224,11 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 	if(chartParams.yAxisLabel){
 		placementStep = .8 * parentWidth / (dataPoints.length-1);
 	}
-	var startX = .05 * parentWidth;
+	var leftAxis = .05 * parentWidth;
 	if(chartParams.yAxisLabel){
-		startX = .1 * parentWidth;
+		leftAxis = .1 * parentWidth;
 	}
+	var startX = leftAxis;
 	var circleList = document.createDocumentFragment();
 	var	lineList = document.createDocumentFragment();
 	
@@ -250,16 +251,19 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 	circle.addEventListener("mouseenter", setToolTip);
 	circle.addEventListener("mouseleave", clearToolTip);
 	circle.addEventListener("mousemove", moveToolTip);
-	circleList.append(circle);
+	//circleList.append(circle);
+	
+	//startX = startX + placementStep;
 	
 	var limit = dataPoints.length;
-	for (var i = 1; i < limit; i++){
+	var circles = [];
+	for (var i = 0; i < limit; i++){
 		var point = dataPoints[i];
-		var nextX = startX + placementStep;
+		var nextX = startX + placementStep * i;
 		var nextY = scale(point[1]);
 		circle = document.createElementNS(svgns, "circle");
-		circle.setAttribute("cx", startX);
-		circle.setAttribute("cy", startY);
+		circle.setAttribute("cx", nextX);
+		circle.setAttribute("cy", nextY);
 		circle.setAttribute("r", 5);		
 		circle.setAttribute("id","series-"+id+"-circle-"+i);
 		circle.setAttribute("data-series", id);		
@@ -269,34 +273,52 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		circle.addEventListener("mouseenter", setToolTip);
 		circle.addEventListener("mouseleave", clearToolTip);
 		circle.addEventListener("mousemove", moveToolTip);
-		circleList.append(circle);
+		circleList.append(circle);	
+		circles.push(circle);
+	}
 	
+	for(var i = 1; i < limit; i++){
+		var previousCircle = circles[i-1];
 		var line = document.createElementNS(svgns, "line");
-		line.setAttribute("x1", startX);
-		line.setAttribute("y1", startY);
+		var nextX = previousCircle.cx.baseVal.value;
+		var nextY = previousCircle.cy.baseVal.value;
+		line.setAttribute("x1", nextX);
+		line.setAttribute("y1", nextY);
+		var nextX = circles[i].cx.baseVal.value;
+		var nextY = circles[i].cy.baseVal.value;
 		line.setAttribute("x2", nextX);
 		line.setAttribute("y2", nextY);
 		line.setAttribute("class",initialClass+id);
-		line.setAttribute("id","series-"+id+"-line-"+i-1);
-		line.setAttribute("data-series", id);
-
-		startX = nextX;
-		startY = nextY;
+		line.setAttribute("id","series-"+id+"-line-"+(i-1));
+		line.setAttribute("data-series", id);	
 		lineList.append(line);
 	}
-	var circle = document.createElementNS(svgns, "circle");
-	circle.setAttribute("cx", startX);
-	circle.setAttribute("cy", startY);	
-	circle.setAttribute("data-series", id);
-	circle.setAttribute("class","not-drawn series-"+id);
-	circle.setAttribute("id","series-"+id+"-circle-"+(limit-1));
-	circle.setAttribute("data-label", dataPoints[limit-1][0]);
-	circle.setAttribute("data-val", formatter(dataPoints[limit-1][1]));
-	circle.addEventListener("mouseenter", setToolTip);
-	circle.addEventListener("mouseleave", clearToolTip);
-	circle.addEventListener("mousemove", moveToolTip);
-	circle.setAttribute("r", 5);
-	circleList.append(circle);
+	if(chartParams.incrementalDraw){
+		var circle = document.createElementNS(svgns, "circle");
+		circle.setAttribute("cx", leftAxis);
+		startY = scale(dataPoints[0][1]);
+		circle.setAttribute("cy", startY);	
+		circle.setAttribute("data-series", id);
+		circle.setAttribute("class","series-"+id+" pew");
+		circle.setAttribute("id","series-"+id+"-circle");
+		circle.setAttribute("data-label", dataPoints[0][0]);
+		circle.setAttribute("data-val", formatter(dataPoints[0][1]));
+		circle.addEventListener("mouseenter", setToolTip);
+		circle.addEventListener("mouseleave", clearToolTip);
+		circle.addEventListener("mousemove", moveToolTip);
+		circle.setAttribute("r", 5);
+		circleList.append(circle);
+		
+		var line = document.createElementNS(svgns, "line");
+		line.setAttribute("x1", leftAxis);
+		line.setAttribute("y1", startY);
+		line.setAttribute("x2", leftAxis);
+		line.setAttribute("y2", startY);
+		line.setAttribute("class","series-"+id);
+		line.setAttribute("id","series-"+id+"-line");
+		line.setAttribute("data-series", id);
+		lineList.appendChild(line);
+	}
 	chartParent.appendChild(lineList);
 	chartParent.appendChild(circleList);	
 };
