@@ -19,6 +19,12 @@ function drawChart(chartParams, dataSet){
 	
 	var bottom = parentHeight * .9 ;
 	var top = parentHeight - bottom;
+	
+	var chartDisplay = {};
+	chartDisplay.bottom = bottom;
+	chartDisplay.top = top;
+	chartDisplay.left = leftAxis;
+	chartDisplay.right = rightAxis;
 
 	var lineList = document.createDocumentFragment();
 	var line = document.createElementNS(svgns, "line");
@@ -160,6 +166,14 @@ function drawChart(chartParams, dataSet){
 		var keys = drawKeys(parentWidth, parentHeight);
 		chartParent.appendChild(keys);
 	}
+	if(chartParams.incrementalDraw){
+		var cover = document.createElementNS(svgns, "rect");
+		cover.setAttribute("width", "100%");
+		cover.setAttribute("height", "100%");
+		cover.setAttribute("id", "cover");
+		chartParent.appendChild(cover);
+	}
+	return chartDisplay;
 }
 
 
@@ -264,9 +278,9 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		circle = document.createElementNS(svgns, "circle");
 		circle.setAttribute("cx", nextX);
 		circle.setAttribute("cy", nextY);
-		circle.setAttribute("r", 5);		
+		circle.setAttribute("r", 5);
 		circle.setAttribute("id","series-"+id+"-circle-"+i);
-		circle.setAttribute("data-series", id);		
+		circle.setAttribute("data-series", id);
 		circle.setAttribute("class",initialClass+id);
 		circle.setAttribute("data-label", dataPoints[i][0]);
 		circle.setAttribute("data-val", formatter(point[1]));
@@ -324,13 +338,14 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 };
 
 function handleKeyClick(event){
+	var id = event.target.parentElement.parentElement.dataset.id;
 	var key = event.target;
 	var series = key.dataset.series;
-	var chartParent = document.getElementById("chart");
+	var chartParent = document.getElementById("chart-"+id);
 	var children = chartParent.children;
 	for(var i = 0; i < children.length; i++){
 		var tester = children[i];
-		if(tester.classList.contains("series-"+series) && tester.id !== "star"){
+		if(tester.classList.contains("series-"+series) && tester.id.indexOf("star") < 0){
 			tester.classList.toggle("hidden");
 		}
 	}
@@ -350,12 +365,11 @@ function setToolTip(event){
 };
 
 function setKeyToolTip(event){
-	var tip = document.getElementById("key-tip");
+	var id = event.target.parentElement.parentElement.dataset.id;
+	var tip = document.getElementById("key-tip-"+id);
 	var data = event.target.dataset;
 	var series = data.series;
 	tip.innerHTML = keyToolTips[series];
-	console.log(event.x);
-	//set zIndex really high
 	tip.classList.toggle("hidden");
 }
 
@@ -391,13 +405,13 @@ function getFormatter(format){
 function clearToolTip(event){
 	var tip = document.getElementById("tip");
 	tip.innerHTML="";
-	//set zIndex back to the series id
 	tip.classList.toggle("hidden");
 	clearStar(event.target);
 };
 
 function clearKey(event){
-	var tip = document.getElementById("key-tip");
+	var id = event.target.parentElement.parentElement.dataset.id;
+	var tip = document.getElementById("key-tip-"+id);
 	tip.innterHTML="";
 	tip.classList.toggle("hidden");
 }
@@ -407,7 +421,7 @@ function moveToolTip(event){
 	var offset = tip.offsetWidth;
 	var offsetY = 5 + tip.offsetHeight;
 	tip.style.left = (event.x-offset/2)+"px";
-	tip.style.top = (event.y - offsetY)+"px";	
+	tip.style.top = (event.y - offsetY)+"px";
 };
 
 function getScaleFunction(dataMin, dataMax, windowMin, windowMax, percentage){

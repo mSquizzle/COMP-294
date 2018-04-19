@@ -46,25 +46,22 @@ function stopRotation(star){
 	clearInterval(star.dataset.stop);
 }
 function setStar(target){
-	//todo - implement
-	event.target.cx;
-	event.target.cy;
-	var star = document.getElementById("star");
-	console.log(event.target.cx.baseVal.value);
-	star.setAttribute("x",event.target.cx.baseVal.value - star.dataset.r);
-	star.setAttribute("y", event.target.cy.baseVal.value - star.dataset.r);
+	var id = target.parentElement.dataset.id;
+	var star = document.getElementById("star-"+id);
+	console.log(target.cx.baseVal.value);
+	star.setAttribute("x",target.cx.baseVal.value - star.dataset.r);
+	star.setAttribute("y", target.cy.baseVal.value - star.dataset.r);
 	star.classList.remove("series-"+star.dataset.prev);
-	star.classList.add("series-"+event.target.dataset.series);
-	star.setAttribute("data-prev", event.target.dataset.series);
+	star.classList.add("series-"+target.dataset.series);
+	star.setAttribute("data-prev",target.dataset.series);
 	rotateStar(star);
 	star.classList.toggle("hidden");
 }
 
 
 function clearStar(target){
-	//todo - implement
-	var star = document.getElementById("star");
+	var id = target.parentElement.dataset.id;
+	var star = document.getElementById("star-"+id);
 	stopRotation(star);
-	
 	star.classList.toggle("hidden");
 	}

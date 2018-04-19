@@ -36,6 +36,7 @@
 			text-align: center;
 			padding: 15px;
 			position:relative;
+			overflow:hidden;
 		}
 		.caption {
 			border-top: black 1px solid;
@@ -67,7 +68,7 @@
 			text-align: center;
 			padding: 5px;
 		}
-		#key-tip{
+		#key-tip-1{
 			position: absolute;
 			float: center;
 			top: 15%;
@@ -100,6 +101,11 @@
 		.series-0 {
 			fill : rgb(37, 186, 44);
 			stroke : rgb(37, 186, 44);
+		}
+		
+		#chart-2 > .series-0 {
+			fill : rgb(0,0,0);
+			stroke : rgb(0, 0,0);
 		}
 		
 		.series-1 {
@@ -189,19 +195,35 @@
 		#cover{
 			fill: rgb(100,100,100,1);
 			stroke-width: 0;
+			pointer-events:none;
+		}
+		svg.chart{
+			position:relative;
+			left:0;
+		}
+		#container{
+			height:100vh;
+		}
+		#chart-2{
+			top:-509px;
+		}
+		#chart-container{
+			height:95%;
+		}
+		.pew {
+		pointer-events:none;
 		}
     </style>
   </head>
   <body>
-    <h1>This is the First Chart</h1>
     <div id="container" class="main container grey">
 		<div id="chart-container" class="container grey">
-			<svg id="chart" width="1000px" height="500px">	
-				<div id="key-tip" class="semi-grey hidden"></div>
+			<svg id="chart-1" data-id="1" class="chart" width="1000px" height="500px">	
+				<div id="key-tip-1" class="semi-grey hidden"></div>
 			</svg>
-			<div class="caption" >
-				This is a test of the first chart. There are limited interactions.
-			</div>
+			<svg id="chart-2" data-id="2" class="chart" width="1000px" height="500px">	
+				<div id="key-tip-2" class="semi-grey hidden"></div>
+			</svg>
 		</div>
 	</div>
 	<div id="tip" class="semi-grey tip hidden"></div>
@@ -210,22 +232,41 @@
 	<script src="../js/chart.js"></script>
 	<script src="../js/manager.js"></script>
 	<script>
-		var chartParams;
+		var chartParams1;
+		var chartParams2;
 		window.addEventListener("load", function(event) {
-			var parent = document.getElementById('chart');
-			chartParams = {};
-			chartParams.height = parent.height.baseVal.value;
-			chartParams.width = parent.width.baseVal.value;
-			chartParams.chartParent = parent;
-			chartParams.maxVal = 25;
-			chartParams.title = "Health Care Statistics";
-			chartParams.subtitle = "January 2006 - March 2017";
-			chartParams.format = "percentage";
-			chartParams.drawKeys = true;
-			chartParams.incrementalDraw = true;
-			chartParams.keys = ["2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017"];
-			drawChart(chartParams, firstChartGroup);
-			buildStar("chart", "star", 5, 10);
+			var parent = document.getElementById('chart-1');
+			chartParams1 = {};
+			chartParams1.height = parent.height.baseVal.value;
+			chartParams1.width = parent.width.baseVal.value;
+			chartParams1.chartParent = parent;
+			chartParams1.maxVal = 25;
+			chartParams1.id=1;
+			chartParams1.title = "Health Care Statistics";
+			chartParams1.subtitle = "January 2006 - March 2017";
+			chartParams1.format = "percentage";
+			chartParams1.drawKeys = true;
+			chartParams1.incrementalDraw = true;
+			chartParams1.keys = ["2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017"];
+			drawChart(chartParams1, firstChartGroup);
+			buildStar("chart-1", "star-1", 5, 10);
+			parent = document.getElementById('chart-2');
+			chartParams2 = {};
+			chartParams2.height = parent.height.baseVal.value;
+			chartParams2.width = parent.width.baseVal.value;
+			chartParams2.chartParent = parent;
+			chartParams2.maxVal = 1600000;
+			chartParams2.id=2;
+			chartParams2.title = "Personal Bankruptcy Filings Caused By Medical Debt";
+			chartParams2.axisFormat = "million";
+			chartParams2.format = "number";
+			chartParams2.drawKeys = false;
+			chartParams2.labelStepSize = 500000;
+			chartParams2.yAxisLabel = "Number of Individual Filings";
+			chartParams2.showMaxVal = true;
+			chartParams2.keys = ["2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016"];
+			drawChart(chartParams2, secondChartGroup);
+			buildStar("chart-2", "star-2", 5, 10);
 			handleFirstChart();
 		});
 	</script>
