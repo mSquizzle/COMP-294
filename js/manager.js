@@ -1,28 +1,10 @@
-
 var init = 0;
-var state = 1;
-
-
-function moveSecondChart(){
-	window.addEventListener("keydown", function(e){
-		var key = e.which || e.keyCode;
-		var chart = document.getElementById("chart-2");
-		if(e.keyCode == 37){
-			init-=5;
-		}else if(e.keyCode == 39){
-			init+=5;
-		}	
-		chart.setAttribute("transform","translate("+init+")");
-	});
-}
+var state = 0;
 
 function handleFirstChart(){
-	//todo - insert extra circle and draw line into chart
-	//move the circle and the line based off of the current config
-	//of the chart
-	state = 1;
 	var chartParams = chartParams1;
 	document.getElementById("chart-2").setAttribute("transform","translate(1000)");
+	document.getElementById("chart-2").classList.add("not-drawn");
 	
 	var index = 1;
 	var nextNodes = [];
@@ -34,10 +16,10 @@ function handleFirstChart(){
 	for(var i = 0; i < chartParams.keys.length;i++){
 		var nodeList = [];
 		var lineList = [];
-		for(var j = 0; j < firstChartGroup.length; j++){		
+		for(var j = 0; j < firstChartGroup.length; j++){
 			var circleId = "series-"+j+"-circle-"+(i);
 			var lineId = "series-"+j+"-line-"+(i);
-			nodeList.push(document.getElementById(circleId));	
+			nodeList.push(document.getElementById(circleId));
 			lineList.push(document.getElementById(lineId));
 		}
 		nodeGroups.push(nodeList);
@@ -54,28 +36,56 @@ function handleFirstChart(){
 	}	
 	nextNodes = nodeGroups[1];
 	previousLines = lineGroups[0];
+	
+	var windowHeight = window.outerHeight;
+	var introText = document.getElementById("intro-text");
+	var introTextHeight = introText.offsetHeight;
+	var introSlide = document.getElementById("intro-slide");
+	//introSlide.setAttribute("height", (windowHeight+introTextHeight)+"px");
+	introText.setAttribute("style", "top:"+windowHeight+"px");
 	window.addEventListener("keydown", function(e){
 		var key = e.which || e.keyCode;
 		var chart = document.getElementById("chart");
 		if(state == 0){
+			//move the intro slide
 			if(e.keyCode == 37){
-				init-=5;
+				init-=2;
 				if(init < 0){
 					init = 0;
 				}
 			}else if (e.keyCode == 39){
+				init+=2;
 				if(init > 100){
 					init = 0;
 					state++;
+					document.getElementById("middle-grad").classList.remove("not-drawn");
+					document.getElementById("top-grad").classList.add("not-drawn");
+					return;
 				}
 			}
+			var introText = document.getElementById("intro-text");
+			var introSlide = document.getElementById("intro-slide");
+			var windowHeight = window.outerHeight;
+			var diff = windowHeight-introSlide.offsetHeight;
+			var pct = init/100.0;
+			var newTextTop = windowHeight - (pct) * (windowHeight+introSlide.offsetHeight);
+			var newSlideTop = newTextTop - windowHeight;
+			introText.setAttribute("style", "top: "+newTextTop+"px");
+			introSlide.setAttribute("style", "top: "+newSlideTop+"px");
 		}else if(state == 1){
+			//animate the first chart
 			var cover = document.getElementById("cover");
+			var introSlide = document.getElementById("intro-slide");
 			if(e.keyCode == 37){
 				init-=5;
 				if(init < 0){
-					init = 0;
+					init = 100;
 					state--;
+					var introText = document.getElementById("intro-slide");
+					introText.setAttribute("style", "transform: translate(0,"+(-init*1.5)+"%)");
+					document.getElementById("middle-grad").classList.add("not-drawn");
+					document.getElementById("top-grad").classList.remove("not-drawn");
+					return;
 				}
 			}else if (e.keyCode == 39){
 				init+=5;
@@ -83,21 +93,23 @@ function handleFirstChart(){
 					init = 0;
 					state++;
 					for(var i = 0; i < firstChartGroup.length;i++){
-						//nodeGroups[0][i].classList.remove("not-drawn");
 						circles[i].classList.remove("not-drawn");
 						circles[i].setAttribute("r",0);
-					}	
+					}
 					cover.setAttribute("style", "fill: rgb(100,100,100,0);");
+					document.getElementById("narration").innerHTML = firstChartNarration[index-1];
 					return;
 				}
 			}
 			cover.setAttribute("style", "fill: rgb(100,100,100,"+(1-init/100)+");");
 		}else if(state == 2){
+			//continue to draw out first chart
 			if(e.keyCode == 37){
 				init-=5;
 				if(init < 0){
 					init = 100;
 					state--;
+					document.getElementById("narration").innerHTML = firstChartNarration[index-1];
 					return;
 				}
 			}else if (e.keyCode == 39){
@@ -109,19 +121,22 @@ function handleFirstChart(){
 						nodeGroups[0][i].classList.remove("not-drawn");
 					//	circles[i].classList.remove("not-drawn");
 					}
+					document.getElementById("narration").innerHTML = firstChartNarration[index-1];
 				}
 			}
 			for(var i = 0; i < firstChartGroup.length;i++){
 				var pct = init/100.0;
 				circles[i].setAttribute("r", 5 * pct);
 			}
-		}else if(state == 3){	
+		}else if(state == 3){
+			//now begin to draw out each series
 			if(e.keyCode == 37){
 				init-=5;
 				if(init < 0 ){
 					//decrement index;
 					index--;
 					init = 100;
+					
 					if(index < 1){
 						index = 1;
 						init = 100;
@@ -130,6 +145,7 @@ function handleFirstChart(){
 							nodeGroups[0][i].classList.add("not-drawn");
 							//circles[i].classList.add("not-drawn");
 						}
+						document.getElementById("narration").innerHTML = firstChartNarration[index-1];
 						return;
 					}				
 					nextNodes = nodeGroups[index];
@@ -147,6 +163,7 @@ function handleFirstChart(){
 						previousLines[i].classList.add("not-drawn");
 						nextNodes[i].classList.add("not-drawn");
 					}
+					document.getElementById("narration").innerHTML = firstChartNarration[index-1];
 				}
 			}else if(e.keyCode == 39){
 				init+=5;
@@ -156,6 +173,10 @@ function handleFirstChart(){
 					if(index >= chartParams.keys.length){
 						index = chartParams.keys.length;
 						state++;
+						nextNodes = nodeGroups[index];
+						previousLines = lineGroups[index-1];
+						document.getElementById("narration").classList.add("not-drawn");
+						return;
 					}
 					for(var i = 0; i < firstChartGroup.length; i++){
 						var nextX = nextNodes[i].cx.baseVal.value;
@@ -172,6 +193,8 @@ function handleFirstChart(){
 					}
 					nextNodes = nodeGroups[index];
 					previousLines = lineGroups[index-1];
+					var narration = document.getElementById("narration");
+					narration.innerHTML = firstChartNarration[index-1];
 				}
 			}
 			for(var i = 0; i < firstChartGroup.length; i++){
@@ -188,18 +211,27 @@ function handleFirstChart(){
 					circles[i].classList.remove("not-drawn");
 				}
 				circles[i].setAttribute("cx", startX + pct * diffX);
-				circles[i].setAttribute("cy", startY + pct * diffY);
-				//circles[i].setAttribute("cx", nextX);
-				//circles[i].setAttribute("cy", nextY);			
+				circles[i].setAttribute("cy", startY + pct * diffY);	
 				circles[i].setAttribute("r", 5 * pct);
 			}
+			var narration = document.getElementById("narration");
+			var newTop = calculateNewTop(narration, pct);
+			narration.setAttribute("style", "top :"+newTop+"px");
 		}else if(state == 4){
+			//move the first chart out
 			if(e.keyCode == 37){
 				init-=5;
 				if(init < 0){
 					state--;
 					init = 100;
 					document.getElementById("chart-1").setAttribute("transform","translate(0)");
+					var narration = document.getElementById("narration");
+					narration.innerHTML = firstChartNarration[index-1];
+					var pct = init/100.0;
+					var narration = document.getElementById("narration");
+					var newTop = calculateNewTop(narration, pct);
+					narration.setAttribute("style", "top :"+newTop+"px");
+					document.getElementById("narration").classList.remove("not-drawn");
 					return;
 				}
 			}else if(e.keyCode == 39){
@@ -208,13 +240,14 @@ function handleFirstChart(){
 					state++;
 					init = 0;
 					document.getElementById("chart-1").setAttribute("transform","translate(-1000)");
+					document.getElementById("chart-2").classList.remove("not-drawn");
 					return;
 				}
 			}	
 			var pct = init/100.0;
 			document.getElementById("chart-1").setAttribute("transform","translate("+ pct * -1000+")");
 		}else if(state == 5){
-			//now move the second chart
+			//move the second chart in
 			if(e.keyCode == 37){
 				init-=5;
 				if(init < 0){
@@ -222,20 +255,111 @@ function handleFirstChart(){
 					init = 100;
 					document.getElementById("chart-1").setAttribute("transform","translate(-1000)");
 					document.getElementById("chart-2").setAttribute("transform","translate(1000)");
+					document.getElementById("chart-2").classList.add("not-drawn");
+					document.getElementById("narration").classList.add("not-drawn");
 					return;
 				}
 			}else if(e.keyCode == 39){
 				init+=5;
 				if(init > 100){
-					//state++;
-					init = 100;
-					//document.getElementById("chart-2").setAttribute("transform","translate(1000)");
+					state++;
+					init = 0;
+					document.getElementById("middle-grad").classList.add("not-drawn");
+					document.getElementById("narration").innerHTML = secondChartNarration[0];
+					var pct = init/100.0;
+					var narration = document.getElementById("narration");
+					var newTop = calculateNewTop(narration, pct);
+					narration.setAttribute("style", "top :"+newTop+"px");
+					narration.classList.remove("not-drawn");
 					return;
 				}
 			}
 			var pct = init/100.0;
 			document.getElementById("chart-2").setAttribute("transform","translate("+((1-pct)*1000)+")");
+		}else if(state == 6){
+			if(e.keyCode == 37){
+				init-=5;
+				if(init < 0){
+					state--;
+					init=100;
+					document.getElementById("middle-grad").classList.add("not-drawn");
+					document.getElementById("narration").classList.add("not-drawn");
+				}
+			}else if(e.keyCode == 39){
+				init+=5;
+				if(init > 100){
+					state++;
+					init = 0;
+					var narration = document.getElementById("narration");
+					narration.classList.add("not-drawn");
+					return;
+				}
+			}
+			var pct = init/100.0;
+			var narration = document.getElementById("narration");
+			var newTop = calculateNewTop(narration, pct);
+			narration.setAttribute("style", "top :"+newTop+"px");
+		}else if(state == 7){
+			if(e.keyCode == 37){
+				init-=5;
+				if(init < 0){
+					state--;
+					init=100;
+					var narration = document.getElementById("narration");
+					narration.classList.remove("not-drawn");
+					document.getElementById("chart-2").setAttribute("transform","translate(0)");
+					return;
+				}
+			}else if(e.keyCode == 39){
+				init+=5;
+				if(init > 100){
+					init = 0;
+					state++;
+					var summary = document.getElementById("summary-slide");
+					summary.classList.remove("not-drawn");
+					var initTop = window.innerHeight;
+					summary.setAttribute("style", "top: "+initTop+"px");
+					return;
+				}
+			}
+			var pct = init / 100.0;
+			document.getElementById("chart-2").setAttribute("transform","translate("+(-pct * 1000)+")");
+		}else if(state == 8){
+			if(e.keyCode == 37){
+				init-=5;
+				if(init < 0){
+					state--;
+					init=100;
+					var summary = document.getElementById("summary-slide");
+					summary.classList.add("not-drawn");
+					var initTop = window.innerHeight;
+					summary.setAttribute("style", "top: "+initTop+"px");
+					return;
+				}
+			}else if(e.keyCode == 39){
+				init+=5;
+				if(init > 100){
+					init = 100;
+				}
+			}
+			var summary = document.getElementById("summary-slide");
+			var initTop = window.innerHeight;
+			var pct = init/100.0;
+			summary.setAttribute("style", "top: "+(initTop*(1-pct))+"px");
 		}
+		
 	});
+	
+	function reinitialize(){
+		console.log("INIT");
+	}
+	
+	function calculateNewTop(narration, pct){
+		var narHeight = narration.offsetHeight;
+		var totalHeight = window.innerHeight;
+		var targetHeight = 500 - narHeight;
+		var newTop = targetHeight + (1-pct) * totalHeight;
+		return newTop;
+	}
 	
 }

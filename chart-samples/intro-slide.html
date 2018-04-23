@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SVG Testing - First Chart</title>
+    <style>
+		body {			
+			font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+			background-color:rgb(100,100,100);
+		}
+		.grey {
+			background-color: rgb(100,100,100);
+			color: white;
+		}
+		tspan {
+			clear: both;
+		}
+		.key{
+			font-size:10px;
+		}
+		.axis{
+			text-align: center;
+			stroke-width: .5;
+			shape-rendering:crispEdges;
+		}
+		line.axis{
+			stroke-width: 1;
+		}
+		.axis.key {
+			text-anchor: middle;
+		}
+		.axis.title {
+			font-size: 15px;
+		}
+		.semi-grey {
+			background-color: rgb(100,100,100,.875);
+			color: white;
+		}
+		.container {
+			text-align: center;
+			position:relative;
+			overflow:hidden;
+		}
+		.caption {
+			border-top: black 1px solid;
+			padding-top: 5px;
+			
+		}
+		#feature-text {
+			position: absolute;
+			left:0;
+			top: 0; 
+			z-index:-1;
+			margin:20px;
+			color: rgb(100,100,100);
+		}
+		svg {
+			border: 1px black solid;
+		}
+		line {
+			fill:rgb(0,0,0);
+		}
+		.secret{
+			z-index:100;
+			opacity:0;
+		}
+		.tip{
+			position: absolute;
+			float: left;
+			border: 1px solid rgb(128,128,128,.5);
+			text-align: center;
+			padding: 5px;
+		}
+		#key-tip-1{
+			position: absolute;
+			float: center;
+			top: 15%;
+			left: 25%;
+			width: 50%;
+			border: 1px solid rgb(0,0,0,.5);
+			background: rgb(225,225,225,.75);
+			color: rgb(0,0,0);
+			text-align: center;
+			padding: 5px;
+			pointer-events: none;
+			font-size: 12px;
+		}
+		#tip {
+			position: absolute;
+			float: left;
+			border: 1px solid rgb(128,128,128,.5);
+			text-align: center;
+			padding: 5px;
+			pointer-events: none
+		}
+		.hidden, .not-drawn {
+			display: none;
+		}
+			
+			.bank > .series-0 {
+			fill : rgb(0,0,0);
+			stroke : rgb(0, 0, 0);
+		}
+		.series-0 {
+			fill : rgb(37, 186, 44);
+			stroke : rgb(37, 186, 44);
+		}
+		
+		#chart-2 > .series-0 {
+			fill : rgb(0,0,0);
+			stroke : rgb(0, 0,0);
+		}
+		
+		.series-1 {
+			fill : rgb(0, 122, 34);
+			stroke : rgb(0, 122, 34);
+		}
+		
+		.series-2 {
+			fill: rgb(41, 206, 0);
+			stroke: rgb(41, 206, 0);
+		}
+		.series-3 {
+			fill: rgb(234, 255, 5);
+			stroke: rgb(234, 255, 5);
+		}
+		.series-4 {
+			fill: rgb(147, 2, 61);
+			stroke: rgb(147, 2, 61);			
+		}
+		.series-5 {
+			fill: rgb(5, 97, 240);
+			stroke: rgb(5, 97, 240);
+		}
+		.star {
+			fill: (255,255,255);
+			stroke-width: 1 !important;
+			pointer-events: none;
+			z-index: 10;
+		}
+		polygon{
+			pointer-events: none;
+			z-index: 10;
+		}
+		rect {
+			stroke: black !important; 
+			stroke-width: 2;
+			-webkit-animation: crossanimate 1s;  
+			-webkit-animation-iteration-count: infinite;
+			animation: crossanimate 1s;
+			animation-iteration-count: infinite
+			-webkit-animation: crossanimate 1s;  
+			-webkit-animation-iteration-count: infinite;
+			animation: crossanimate 1s;
+			animation-iteration-count: infinite;
+		}
+		path.cross {
+			stroke: black !important; 
+			stroke-width: 2;
+			pointer-events:none;
+		}
+		
+		rect.key:hover, rect.key:hover + path.cross{
+			-webkit-animation: mymove 1s;
+			-webkit-animation-iteration-count: infinite;
+			animation: mymove 1s;
+			animation-iteration-count: infinite;
+		}
+		
+		rect.hidesib + path.cross{
+			display:none;
+		}
+
+		@-webkit-keyframes mymove {
+			from {
+				stroke-width:1;
+				stroke:rgb(100,100,100);
+				}
+			to {
+				stroke:white;
+				stroke-width:2;
+				}
+		}
+
+		@keyframes mymove {
+			from {
+				stroke-width:1;
+				stroke:rgb(100,100,100);
+				}
+			to {
+				stroke:white;
+				stroke-width:2;
+				}
+		}	
+		.pew {
+			fill : black !important;
+		}
+		#cover{
+			fill: rgb(100,100,100,1);
+			stroke-width: 0;
+			pointer-events:none;
+		}
+		svg.chart{
+			position: absolute;
+			  width:1000px;
+			  max-width: 1000px;
+			  min-width: 1000px;
+			  height: 500px;
+			  overflow: hidden;
+			  margin: 0 auto;
+			  left:0;
+			  right:0;
+			  padding:none;
+		}
+		#container{
+			height:100vh;
+		}
+		#chart-container{
+			position:absolute;
+			width:999px;
+			height:100vh;
+			overflow: hidden;
+			margin: 0 auto;
+			left:0;
+			right:0;
+		}
+		.pew {
+			pointer-events:none;
+		}
+		#triangle{
+			-webkit-animation: NAME-YOUR-ANIMATION .5s infinite; /* Safari 4+ */
+			-moz-animation: NAME-YOUR-ANIMATION .5s infinite; /* Fx 5+ */
+			-o-animation: NAME-YOUR-ANIMATION .5s infinite; /* Opera 12+ */
+			animation: NAME-YOUR-ANIMATION .5s infinite; /* IE 10+, Fx 29+ */
+			animation-direction: alternate
+		}
+		@-webkit-keyframes NAME-YOUR-ANIMATION {
+		  0%   { opacity: 0; }
+		  100% { opacity: 1; }
+		}
+		@-moz-keyframes NAME-YOUR-ANIMATION {
+		  0%   { opacity: 0; }
+		  100% { opacity: 1; }
+		}
+		@-o-keyframes NAME-YOUR-ANIMATION {
+		  0%   { opacity: 0; }
+		  100% { opacity: 1; }
+		}
+		@keyframes NAME-YOUR-ANIMATION {
+		  0%   { opacity: 0; }
+		  100% { opacity: 1; }
+		}
+		#intro-slide{
+			background: rgb(100,100,100);
+			position:absolute;
+			width:1000px;
+			height:100vh;
+			top:250px;
+			z-index:2;
+			overflow-x: hidden;
+			overflow-y: visible;
+			margin: 0 auto;
+			left:0;
+			right:0;
+			
+		}
+		#intro-text{
+			top:90vh;
+			position:absolute;
+		}
+    </style>
+  </head>
+  <body>
+    <div id="container" class="main container grey">
+		<div id="chart-container" class="container grey">
+			<div id="intro-slide">
+				<div class="title text">
+					<h1>The Affordable Care Act<h1><br/>
+					<span>A Brief Introduction and Timeline</span>
+				</div>
+				<svg id="triangle" width="30" height="30">
+					<path fill="white" stroke="white" d="M 5 5 l 10 15 l 10 -15"/>
+				</svg>
+				<div id="intro-text">
+					<p> More commonly known as Obamacare, the Affordable Care Act (ACA) is one of the most important pieces of health care legislation since the creation of Medicaid and Medicare in 1965. </p>
+					<p>However, despite this law's significance, there seems to be a large amount of misunderstanding around what it is, what it aims to do, or even when it happened. Rumors and misconceptions have been circulating about the law since before it was even being drafted.</p>
+					<p>
+					In addition, they found that 45% did not understand "copayment" or "provider network". This is consistent with other studies from other states and nationwide that indicate a large percentage of Americans are not comfortable with the language used to discuss health care, and thus have issues understanding the conversation surrounding it.
+					</p>
+					<p>
+					 Health care was (and still remains) a challenging topic for many. A 2016 survey by Rice University found that 25% of adults in Texas 'lacked confidence in understanding' health terms like "deductible", "copayment" and "premium." 
+					</p>
+					<p>At 974 pages, the ACA is not exactly a light read for the average American, which further makes is difficult to discern fact from fiction."</p>
+					<p>Continue scrolling to see a timeline of the ACA, while examining some of the metrics used to measure its success.</p>
+				</div>
+			</div>
+			<svg id="chart-1" data-id="1" class="chart" width="1000px" height="500px">	
+				<div id="key-tip-1" class="semi-grey hidden"></div>
+			</svg>
+			<svg id="chart-2" data-id="2" class="chart" width="1000px" height="500px">	
+				<div id="key-tip-2" class="semi-grey hidden"></div>
+			</svg>
+			<div id="summary-slide">
+			
+			</div>
+		</div>
+	</div>
+	<div id="tip" class="semi-grey tip hidden"></div>
+	<script src="../js/star.js"></script>
+	<script src="../js/datapoint.js"></script>
+	<script src="../js/chart.js"></script>
+	<script src="../js/manager.js"></script>
+	<script>
+		var chartParams1;
+		var chartParams2;
+		window.addEventListener("load", function(event) {
+			var parent = document.getElementById('chart-1');
+			chartParams1 = {};
+			chartParams1.height = parent.height.baseVal.value;
+			chartParams1.width = parent.width.baseVal.value;
+			chartParams1.chartParent = parent;
+			chartParams1.maxVal = 25;
+			chartParams1.id=1;
+			chartParams1.title = "Health Care Statistics";
+			chartParams1.subtitle = "January 2006 - March 2017";
+			chartParams1.format = "percentage";
+			chartParams1.drawKeys = true;
+			chartParams1.incrementalDraw = true;
+			chartParams1.keys = ["2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017"];
+			drawChart(chartParams1, firstChartGroup);
+			buildStar("chart-1", "star-1", 5, 10);
+			parent = document.getElementById('chart-2');
+			chartParams2 = {};
+			chartParams2.height = parent.height.baseVal.value;
+			chartParams2.width = parent.width.baseVal.value;
+			chartParams2.chartParent = parent;
+			chartParams2.maxVal = 1600000;
+			chartParams2.id=2;
+			chartParams2.title = "Personal Bankruptcy Filings Caused By Medical Debt";
+			chartParams2.axisFormat = "million";
+			chartParams2.format = "number";
+			chartParams2.drawKeys = false;
+			chartParams2.labelStepSize = 500000;
+			chartParams2.yAxisLabel = "Number of Individual Filings";
+			chartParams2.showMaxVal = true;
+			chartParams2.keys = ["2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016"];
+			drawChart(chartParams2, secondChartGroup);
+			buildStar("chart-2", "star-2", 5, 10);
+			handleFirstChart();
+		});
+	</script>
+	</body>
+</html>

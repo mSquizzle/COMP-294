@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SVG Testing - First Chart</title>
+    <style>
+		body {			
+			font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+			background-color:rgb(100,100,100);
+		}
+		.grey {
+			background-color: rgb(100,100,100);
+			color: white;
+		}
+		tspan {
+			clear: both;
+		}
+		.key{
+			font-size:10px;
+		}
+		.axis{
+			text-align: center;
+			stroke-width: .5;
+			shape-rendering:crispEdges;
+		}
+		line.axis{
+			stroke-width: 1;
+		}
+		.axis.key {
+			text-anchor: middle;
+		}
+		.axis.title {
+			font-size: 15px;
+		}
+		.semi-grey {
+			background-color: rgb(100,100,100,.875);
+			color: white;
+		}
+		.container {
+			text-align: center;
+			position:relative;
+			overflow:hidden;
+		}
+		.caption {
+			border-top: black 1px solid;
+			padding-top: 5px;
+			
+		}
+		#feature-text {
+			position: absolute;
+			left:0;
+			top: 0; 
+			z-index:-1;
+			margin:20px;
+			color: rgb(100,100,100);
+		}
+		svg {
+			border: 1px black solid;
+		}
+		line {
+			fill:rgb(0,0,0);
+		}
+		.secret{
+			z-index:100;
+			opacity:0;
+		}
+		.tip{
+			position: absolute;
+			float: left;
+			border: 1px solid rgb(128,128,128,.5);
+			text-align: center;
+			padding: 5px;
+		}
+		#key-tip-1{
+			position: absolute;
+			float: center;
+			top: 15%;
+			left: 25%;
+			width: 50%;
+			border: 1px solid rgb(0,0,0,.5);
+			background: rgb(225,225,225,.75);
+			color: rgb(0,0,0);
+			text-align: center;
+			padding: 5px;
+			pointer-events: none;
+			font-size: 12px;
+		}
+		#tip {
+			position: absolute;
+			float: left;
+			border: 1px solid rgb(128,128,128,.5);
+			text-align: center;
+			padding: 5px;
+			pointer-events: none
+		}
+		.hidden, .not-drawn {
+			display: none;
+		}
+			
+			.bank > .series-0 {
+			fill : rgb(0,0,0);
+			stroke : rgb(0, 0, 0);
+		}
+		.series-0 {
+			fill : rgb(37, 186, 44);
+			stroke : rgb(37, 186, 44);
+		}
+		
+		#chart-2 > .series-0 {
+			fill : rgb(0,0,0);
+			stroke : rgb(0, 0,0);
+		}
+		
+		.series-1 {
+			fill : rgb(0, 122, 34);
+			stroke : rgb(0, 122, 34);
+		}
+		
+		.series-2 {
+			fill: rgb(41, 206, 0);
+			stroke: rgb(41, 206, 0);
+		}
+		.series-3 {
+			fill: rgb(234, 255, 5);
+			stroke: rgb(234, 255, 5);
+		}
+		.series-4 {
+			fill: rgb(147, 2, 61);
+			stroke: rgb(147, 2, 61);			
+		}
+		.series-5 {
+			fill: rgb(5, 97, 240);
+			stroke: rgb(5, 97, 240);
+		}
+		.star {
+			fill: (255,255,255);
+			stroke-width: 1 !important;
+			pointer-events: none;
+			z-index: 10;
+		}
+		polygon{
+			pointer-events: none;
+			z-index: 10;
+		}
+		rect {
+			stroke: black !important; 
+			stroke-width: 2;
+			-webkit-animation: crossanimate 1s;  
+			-webkit-animation-iteration-count: infinite;
+			animation: crossanimate 1s;
+			animation-iteration-count: infinite
+			-webkit-animation: crossanimate 1s;  
+			-webkit-animation-iteration-count: infinite;
+			animation: crossanimate 1s;
+			animation-iteration-count: infinite;
+		}
+		path.cross {
+			stroke: black !important; 
+			stroke-width: 2;
+			pointer-events:none;
+		}
+		
+		rect.key:hover, rect.key:hover + path.cross{
+			-webkit-animation: mymove 1s;
+			-webkit-animation-iteration-count: infinite;
+			animation: mymove 1s;
+			animation-iteration-count: infinite;
+		}
+		
+		rect.hidesib + path.cross{
+			display:none;
+		}
+
+		@-webkit-keyframes mymove {
+			from {
+				stroke-width:1;
+				stroke:rgb(100,100,100);
+				}
+			to {
+				stroke:white;
+				stroke-width:2;
+				}
+		}
+
+		@keyframes mymove {
+			from {
+				stroke-width:1;
+				stroke:rgb(100,100,100);
+				}
+			to {
+				stroke:white;
+				stroke-width:2;
+				}
+		}	
+		.pew {
+			fill : black !important;
+		}
+		#cover{
+			fill: rgb(100,100,100,1);
+			stroke-width: 0;
+			pointer-events:none;
+		}
+		svg.chart{
+			position: absolute;
+			  width:1000px;
+			  max-width: 1000px;
+			  min-width: 1000px;
+			  height: 500px;
+			  overflow: hidden;
+			  margin: 0 auto;
+			  left:0;
+			  right:0;
+			  padding:none;
+		}
+		#container{
+			height:100vh;
+		}
+		#chart-container{
+			position:absolute;
+			width:999px;
+			height:100vh;
+			overflow: hidden;
+			margin: 0 auto;
+			left:0;
+			right:0;
+		}
+		.pew {
+			pointer-events:none;
+		}
+		#triangle{
+			-webkit-animation: NAME-YOUR-ANIMATION .5s infinite; /* Safari 4+ */
+			-moz-animation: NAME-YOUR-ANIMATION .5s infinite; /* Fx 5+ */
+			-o-animation: NAME-YOUR-ANIMATION .5s infinite; /* Opera 12+ */
+			animation: NAME-YOUR-ANIMATION .5s infinite; /* IE 10+, Fx 29+ */
+			animation-direction: alternate
+		}
+		@-webkit-keyframes NAME-YOUR-ANIMATION {
+		  0%   { opacity: 0; }
+		  100% { opacity: 1; }
+		}
+		@-moz-keyframes NAME-YOUR-ANIMATION {
+		  0%   { opacity: 0; }
+		  100% { opacity: 1; }
+		}
+		@-o-keyframes NAME-YOUR-ANIMATION {
+		  0%   { opacity: 0; }
+		  100% { opacity: 1; }
+		}
+		@keyframes NAME-YOUR-ANIMATION {
+		  0%   { opacity: 0; }
+		  100% { opacity: 1; }
+		}
+		#intro-slide{
+			background: rgb(100,100,100);
+			position:absolute;
+			width:1000px;
+			height:100vh;
+			top:250px;
+			z-index:2;
+			overflow-x: hidden;
+			overflow-y: visible;
+			margin: 0 auto;
+			left:0;
+			right:0;
+			
+		}
+		#intro-text{
+			top:90vh;
+			position:absolute;
+		}
+		div.source {
+			background-color: rgb(0,150,150);
+			text-decoration: none;
+		}
+		a {
+			text-decoration: none;
+		}
+		div.source:hover {
+			background-color: white
+		}
+		.source-list > div {
+			display: inline-block;
+			padding: 5px;
+			margin-top:10px;
+			margin-bottom:5px;
+			border-color: black;
+			border: 1px solid;
+		}
+		source-list > p {
+			font-size: 15px;
+			line-height:1.5em;
+			margin: 0;
+			padding: 0;
+			-webkit-margin-before:0;
+			-webkit-margin-after:0;
+		}
+		div.source-list {
+			border-top: rgb(70,70,70) 1px solid;
+		}
+		h2{
+			font-size: 40px;
+			margin:0;
+		}
+		h3 {
+			margin: 0;
+			font-size: 
+		}
+		#summary-slide, a{
+			color: black;
+		}
+		ul {
+			margin: 0;
+			list-style-type: none;
+		}
+		ul > li:before {
+			content: "-";
+			text-indent: -5px;
+		}
+		#top-grad{
+			height:100px;
+			position: fixed;
+			top:0;
+		}
+		#footer-grad{
+			position: fixed;
+			bottom: 0;
+			height:100px;
+		}
+		#middle-grad{
+			height: 50px;
+			width: 100%;
+			position: fixed;
+			top: 494px;
+			margin: 0;
+		}
+		.gradient-bottom{
+			background: linear-gradient(0deg, rgba(100,100,250,1) 0%, rgba(100,100,250,0)100%);
+			width:100%;
+		}
+		.gradient-top{
+			background: linear-gradient(0deg, rgba(100,100,250,0) 0%, rgba(100,100,250,1)100%);
+			width:100%;
+		}
+		#narration{
+			position:absolute;
+			top:100vh;
+		}
+    </style>
+  </head>
+  <body>
+    <div id="container" class="main container grey">
+		<div id="chart-container" class="container grey">
+			<div id="summary-slide">
+				<div>
+					<h2>In Summary</h2>
+					<div>
+						<div class="source-list">
+							<p>
+								The Affordable Care Act is a piece of health care legislation that aims to overhaul the health system by increasing the access to health coverage.
+							</p>
+						</div>
+						<div class="source-list">
+							<p>
+								It accomplishes this by: 
+							</p>
+							<ul>
+								<li>Requiring U.S. citizens and legal citizens to have qualifying health coverage (with a few exceptions) or pay a tax penalty.</li>
+								<li>Expanding Medicaid to those below 133% of the poverty level</li>
+								<li>The creation of state-based exchanges where coverage policies can be purchased.</li>
+								<li>Addition of requirements and tax incentives for employers to offer health insurance to full-time employees.</li>
+								<li>Prohibiting denial of coverage based on pre-existing conditions</li>
+								<li>Allowing depdendents up to age 26 to stay on their parent's health insurance</li>
+							</ul>
+						</div>
+						<div class="source-list">
+							<p>
+								It was signed into law in March of 2010 by President Barack Obama.
+							</p>
+							<p>
+								However, most of the major provisions specified above were not implemented until January 1st, 2014.
+							</p>
+							<p>
+							So the ACA technically happened in 2010, but it would be correft to state that it truly came into effect in 2014.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="source-list">
+					<h2>Thanks for sticking around!</h2>
+					<!-- todo - need to make this send the viz back to the beginning with an onclick -->
+					<div class="source"><a href="#" target="_blank">Back to Beginning</a></div>
+				</div>
+				<div>
+					<div class="source-list">
+						<h3>Sources</h3>
+						<div class="source"><a href="https://www.cdc.gov/nchs/nhis/releases/released201709.htm" target="_blank">National Health Survey</a></div>
+						<div class="source"><a href="https://data.bls.gov" target="_blank">Bureau of Labor Statistics</a></div>
+						<div class="source"><a href="https://www.consumerreports.org/personal-bankruptcy/how-the-aca-drove-down-personal-bankruptcy/" target="_blank">Consumer Reports</a></div>
+						<div class="source"><a href="https://resources.ehealthinsurance.com/affordable-care-act/history-timeline-affordable-care-act-aca" target="_blank">eHealth Insurance</a></div>
+						<div class="source"><a href="http://affordablehealthca.com/timeline-obamacare/" target="_blank">Affordable Healthcare CA</a></div>
+						<div class="source"><a href="https://www.npr.org/sections/health-shots/2017/12/13/570479181/why-do-so-many-people-hate-obamacare-so-much" target="_blank">NPR</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="top-grad" class="gradient-top">
+		</div>
+		<div id="middle-grad" class="gradient-top">
+		</div>
+		<div id="footer-grad" class="gradient-bottom">
+		</div>
+	</div>
+	<div id="tip" class="semi-grey tip hidden"></div>
+	</body>
+</html>

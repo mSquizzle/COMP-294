@@ -152,6 +152,99 @@ var secondChartGroup = [
 ];
 
 
+var firstChartNarration = [
+	"<p>Here we have the following statistics:</p>"
+      +"<p>- the percentange of uninsured Americans</p>"
+      +"<p>- the percentage of Americans who failed to obtain needed medical care due to cost</p>"
+      +"<p>In addition, we have also included the unemployment rate, since over 70% of Americans receive private insurance, which is usually obtained through their employer.</p>"
+      +"<p>We chose to start our timeline around 2006 in order to give a good idea of what these statistics looked like prior to the ACA.</p>"
+      +"<p>As you scroll through, feel free to interact with the chart above to turn on/off any of the statistics.</p>",
+	  "<p>2007</p>"
+      +"<p>As we enter 2007, remember that we are coming to the end of the second term of George W. Bush's presidency.</p>"
+      +"<p>Tensions are high.</p>"
+      +"<p>We are still in midst of the Iraq War.</p>"
+      +"<p>We are also in the middle of a recession, watching the unemployment rate rapidly rise...</p>"
+      +"<p>and of course, presidential campaigns are now becoming the sole focus of the news cycle.</p>",
+	"<p>2008</p>"
+      +"<p>Senators Barack Obama and John McCain with the nominations from their respective parties.</p>"
+      +"<p>As they engage in debates, major topics include the war, the enonomy and health care.</p>"
+      +"<p>Both candidates present different visions for health care.</p>"
+      +"<p>McCain opts for a plan to make heath care more affordable.</p>"
+      +"<p>Obama's plan focuses on making health care more accessible.</p>"
+      +"<p>After a long campaign, Obama secures the presidency in November.</p>",
+	"<p>2009\n\n"
+      +"<p>March - President Obama partakes in a health summit, meeting with law-makers and individuals from different parts of the health care system,\n like doctors, insurers and drug companies.</p>"
+      +"<p>July - House Democrats reveal a 1000-page plan for revamping the existing health care system.</p>"
+      +"<p>August - Sarah Palin posts on Facebook about Obama's \"death panels\", urging supporters to fight against the proposed healthcare bill.</p>"
+      +"<p>This becomes Politifact's 'Lie of the Year' for 2009.</p>"
+      +"<p>Democratic Massachusetts Senator Ted Kennedy dies.</p>"
+      +"<p>November - The House passes its version of health care reform with a 220-215 vote.</p>"
+      +"<p>December - The Senate approves its version of the bill with a 60-39 vote, which is entirely along party lines.</p>", 
+	  "<p>2010</p>"
+    +"<p>January - In an upset, Republican Scott Brown wins the special election for Ted Kennedy's Senate Seat.</p>"
+    +"<p>He had campaigned against the health care reform.</p>"
+    +"<p>March - President Obama signs the ACA into law (titled \"The Patiend Protection and Affordable Care Act\".</p>"+
+      "<p>June - The first major provision is put into effect: </p>"+
+      "<p>- Adults with existing conditions are now able to sign up for insurance. </p>"+
+      "<p>(they will have to re-enroll later in an ACA compliant plan)</p>"+
+      "<p>September 2010 - Additional provisions go into effect:</p>"
+      +"<p>- No lifetime dollar limits on health care coverage</p>"
+      +"<p>- Dependent children may stay on their parents' insurance until the age of 26</p>"
+      +"<p>- Ban on denial of coverage due to pre-existing conditions extended to those under 19.</p>"
+      +"<p>- Insurers may no longer require copays for vaccines and preventive care.</p>",
+	"<p>2011</p>"
+      +"<p>January - A Florida judge Roger Vinson declares that elements of the ACA are unconstitutional.</p>"
+      +"<p>September - Health insurers are required to go public with rates increases of 10 percent or more.</p>"
+      +"<p>November - The Supreme Court of the United Sates hears arguments that major elements of the ACA are unconsitutional.</p>",
+	"<p>2012</p>"
+      +"<p>June - The Supreme Court issues their ruling, upholding major provisions of the ACA.</p>"
+      +"<p>Republican presidential nominee Mitt Romney vocally disagrees with the decision and the ACA as a whole.</p>"
+      +"<p>Interestingly enough, Mitt Romney was the governer of Massachusetts when it passed its own health care reform requiring individual mandates.</p>"
+      +"<p>This is colloquially known as Romneycare, much in the same way that the ACA has been dubbed Obamacare.</p>"
+      +"<p>November - Obama wins reelection over Romney with substantial margins.</p>"
+      +"<p>This ensures the ACA's existence until 2016</p>",
+	"<p>2013</p>"
+      +"<p>January - Limit on pretax contributions to flex spending accounts capped at $2,500 annually.</p>"
+      +"<p>July - The White House agrees to delay the provision that large businesses must provide afforable health care to full-time employees by one year.</p>"
+      +"<p>October - Healthcare.gov rolls out, marking open enrollment for the new health exchanges. </p>"
+      +"<p>The event is somewhat mired by technological difficulties, making it difficult for people to enroll.</p>" 
+      +"<p>December - the majority of infrastructure issues ailing healthcare.gov have been resolved.</p>",
+	"<p>2014</p>"
+      +"<p>January - Most of the ACA's major provisions are enacted. These include:</p>"
+      +"<p>- Opening of state health care exchanges</p>"
+      +"<p>- Requirement of large employers to provide affordable coverage to employees who work more than 30 hours per week.</p>"
+      +"<p>- Ban on denial of coverage to adults with pre-existing condtions</p>"
+      +"<p>- Individuals who enrolled in a plan after March 23rd, 2010 must re-enroll in an ACA-compliant plan</p>"
+      +"<p>- Individuals who enrolled prior to March 23rd, 2010 may keep their plan as long as it is offered</p>",
+	"<p>2015</p>"
+      +"<p>This is a relatively quiet year for the ACA.</p>"
+      +"<p></p>"
+      +"<p>Most of the news at this point is focusing on what will become a complete circus of a presidential election.</p>",
+	"<p>2016</p>"
+      +"<p>November - Donald Trump is elected president. One of his most highly touted campaign promises includes the replacement and repeal of the ACA.</p>"
+      +"<p>He alleges that this will be done 'out of the gate' and that his repeal and replacement plans for the ACA will be simultaneous.</p>"
+      +"<p>With the Republican Party in control of both the House and the Senate, it seemed as if the ACA's end was immeninent.</p>"
+      +"<p>Yet somehow, things do not go according to plan.</p>"
+      +"<p>House Republicans have tried and failed multiple times to pass any new legistlation that would repeal the ACA.</p>"
+      +"<p>We are at tail-end of open enrollment for 2017, which means that the ACA lives to fight for at least one more year.</p>"   
+]
+
+var secondChartNarration = [
+	"<p>Another metric that be used to view the impact of the ACA is the number of bankrupcties filed where medical bills were the primary cause. Like the other metrics, there is no one single factor influencing why this statistic has seen a decrease in recent years.</p>"
+    +"<p>However, insurance plays a huge role in reducing the cost of most medical expenses. By expanding health coverage access, the number of individuals who are paying completely out of pocket for medical expenses like doctors visits, prescription medication, and operations, are reduced. Since the ACA was signed, the number of these types of bankruptcies have been almost cut in half.</p>"
+    +"<p>So why has the ACA had such a mixed approval rating?</p>"
+    +"<p>For one, many people simply object to the idea of the federal government's increased involvement in the health care industry. In addition, there's still a lot of confusion around the ACA itself. There are still people who don't know that the ACA and Obamacare refer to the same legislation.</p>"
+    +"<p>People also tend to lump all problems associated with the health care system in with the ACA, list the rising cost of health care.</p>"
+    +"<p>Looking at the above chart, one would expect that the cost of health care has decreased. That's not true at all; health care costs have consistently been on the rise by over 4% per year in the past 15 years.</p>"
+    +"<p></p>"
+    +"<p>Note that not everyone comes out a winner with the implementation of the ACA. Opening access to health insurance to people with pre-existing conditions has caused health insurance companies raise rates to cover the cost. In particular, the ACA has not benefitted people who make too much to qualify for government subsidies, but not enough to pay the premiums for the insurance plans available to them</p>"
+
+]
+
+
+
+
+
 function extractMax(dataSets){
 	var max = 0.0;
 	for(var i = 0; i < dataSets.length; i++){

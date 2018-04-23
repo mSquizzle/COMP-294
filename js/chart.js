@@ -176,7 +176,7 @@ function drawChart(chartParams, dataSet){
 	return chartDisplay;
 }
 
-
+//todo - make this a function we pass in or just make more generic
 function drawKeys(parentWidth, parentHeight){
 	var keyX = .75 * parentWidth + 10;
 	var keyY = 50;
@@ -209,7 +209,15 @@ function drawKey(keyX, keyY, series){
 	label.setAttribute("x", 15);
 	label.setAttribute("y", 10);
 	label.setAttribute("class", "key");
-	label.innerHTML = keyLabels[series];
+	//label.innerHTML = keyLabels[series];
+	var innerText = keyLabels[series];
+	words = innerText.split("<br/>");
+	for(var i = 0; i < words.length; i++){
+		var tspan = document.createElementNS(svgns, "tspan");
+		tspan.innerHTML = words[i];
+		tspan.setAttribute("dy", i);
+		label.appendChild(tspan);
+	}
 	square.setAttribute("width", 10);
 	square.setAttribute("height", 10);	
 	square.setAttribute("class", "hidesib series-"+series);

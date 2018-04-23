@@ -3,227 +3,98 @@
   <head>
     <meta charset="utf-8">
     <title>SVG Testing - First Chart</title>
-    <style>
-		body {			
-			font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-		}
-		.grey {
-			background-color: rgb(100,100,100);
-			color: white;
-		}
-		tspan {
-			clear: both;
-		}
-		.key{
-			font-size:10px;
-		}
-		.axis {
-			text-align: center;
-			stroke-width: .5;
-			shape-rendering:crispEdges;
-		}
-		.axis.key {
-			text-anchor: middle;
-		}
-		.axis.title {
-			font-size: 15px;
-		}
-		.semi-grey {
-			background-color: rgb(100,100,100,.875);
-			color: white;
-		}
-		.container {
-			text-align: center;
-			padding: 15px;
-			position:relative;
-			overflow:hidden;
-		}
-		.caption {
-			border-top: black 1px solid;
-			padding-top: 5px;
-			
-		}
-		#feature-text {
-			position: absolute;
-			left:0;
-			top: 0; 
-			z-index:-1;
-			margin:20px;
-			color: rgb(100,100,100);
-		}
-		svg {
-			border: 1px black solid;
-		}
-		line {
-			fill:rgb(0,0,0);
-		}
-		.secret{
-			z-index:100;
-			opacity:0;
-		}
-		.tip{
-			position: absolute;
-			float: left;
-			border: 1px solid rgb(128,128,128,.5);
-			text-align: center;
-			padding: 5px;
-		}
-		#key-tip-1{
-			position: absolute;
-			float: center;
-			top: 15%;
-			left: 25%;
-			width: 50%;
-			border: 1px solid rgb(0,0,0,.5);
-			background: rgb(225,225,225,.75);
-			color: rgb(0,0,0);
-			text-align: center;
-			padding: 5px;
-			pointer-events: none;
-			font-size: 12px;
-		}
-		#tip {
-			position: absolute;
-			float: left;
-			border: 1px solid rgb(128,128,128,.5);
-			text-align: center;
-			padding: 5px;
-			pointer-events: none
-		}
-		.hidden, .not-drawn {
-			display: none;
-		}
-			
-			.bank > .series-0 {
-			fill : rgb(0,0,0);
-			stroke : rgb(0, 0, 0);
-		}
-		.series-0 {
-			fill : rgb(37, 186, 44);
-			stroke : rgb(37, 186, 44);
-		}
-		
-		#chart-2 > .series-0 {
-			fill : rgb(0,0,0);
-			stroke : rgb(0, 0,0);
-		}
-		
-		.series-1 {
-			fill : rgb(0, 122, 34);
-			stroke : rgb(0, 122, 34);
-		}
-		
-		.series-2 {
-			fill: rgb(41, 206, 0);
-			stroke: rgb(41, 206, 0);
-		}
-		.series-3 {
-			fill: rgb(234, 255, 5);
-			stroke: rgb(234, 255, 5);
-		}
-		.series-4 {
-			fill: rgb(147, 2, 61);
-			stroke: rgb(147, 2, 61);			
-		}
-		.series-5 {
-			fill: rgb(5, 97, 240);
-			stroke: rgb(5, 97, 240);
-		}
-		.star {
-			fill: (255,255,255);
-			stroke-width: 1 !important;
-			pointer-events: none;
-			z-index: 10;
-		}
-		polygon{
-			pointer-events: none;
-			z-index: 10;
-		}
-		rect {
-			stroke: black !important; 
-			stroke-width: 2;
-			-webkit-animation: crossanimate 1s;  
-			-webkit-animation-iteration-count: infinite;
-			animation: crossanimate 1s;
-			animation-iteration-count: infinite
-			-webkit-animation: crossanimate 1s;  
-			-webkit-animation-iteration-count: infinite;
-			animation: crossanimate 1s;
-			animation-iteration-count: infinite;
-		}
-		path.cross {
-			stroke: black !important; 
-			stroke-width: 2;
-			pointer-events:none;
-		}
-		
-		rect.key:hover, rect.key:hover + path.cross{
-			-webkit-animation: mymove 1s;
-			-webkit-animation-iteration-count: infinite;
-			animation: mymove 1s;
-			animation-iteration-count: infinite;
-		}
-		
-		rect.hidesib + path.cross{
-			display:none;
-		}
-
-		@-webkit-keyframes mymove {
-			from {
-				stroke-width:1;
-				stroke:rgb(100,100,100);
-				}
-			to {
-				stroke:white;
-				stroke-width:2;
-				}
-		}
-
-		@keyframes mymove {
-			from {
-				stroke-width:1;
-				stroke:rgb(100,100,100);
-				}
-			to {
-				stroke:white;
-				stroke-width:2;
-				}
-		}	
-		.pew {
-			fill : black !important;
-		}
-		#cover{
-			fill: rgb(100,100,100,1);
-			stroke-width: 0;
-			pointer-events:none;
-		}
-		svg.chart{
-			position:relative;
-			left:0;
-		}
-		#container{
-			height:100vh;
-		}
-		#chart-2{
-			top:-509px;
-		}
-		#chart-container{
-			height:95%;
-		}
-		.pew {
-		pointer-events:none;
-		}
-    </style>
+    <link rel="stylesheet" href="../css/viz.css">
   </head>
   <body>
     <div id="container" class="main container grey">
 		<div id="chart-container" class="container grey">
+			<div id="intro-slide">
+				<div class="title text">
+					<h1>The Affordable Care Act:</h1>
+					<h2>A Brief Introduction and Timeline</h2>
+					<svg id="triangle" width="30" height="30">
+						<path fill="white" stroke="white" d="M 5 5 l 10 15 l 10 -15"/>
+					</svg>
+				</div>
+				<div id="intro-text">
+					<p> More commonly known as Obamacare, the Affordable Care Act (ACA) is one of the most important pieces of health care legislation since the creation of Medicaid and Medicare in 1965. </p>
+					<p>However, despite this law's significance, there seems to be a large amount of misunderstanding around what it is, what it aims to do, or even when it happened. Rumors and misconceptions have been circulating about the law since before it was even being drafted.</p>
+					<p>
+					In addition, they found that 45% did not understand "copayment" or "provider network". This is consistent with other studies from other states and nationwide that indicate a large percentage of Americans are not comfortable with the language used to discuss health care, and thus have issues understanding the conversation surrounding it.
+					</p>
+					<p>
+					 Health care was (and still remains) a challenging topic for many. A 2016 survey by Rice University found that 25% of adults in Texas 'lacked confidence in understanding' health terms like "deductible", "copayment" and "premium." 
+					</p>
+					<p>At 974 pages, the ACA is not exactly a light read for the average American, which further makes is difficult to discern fact from fiction."</p>
+					<p>Continue scrolling to see a timeline of the ACA, while examining some of the metrics used to measure its success.</p>
+				</div>
+			</div>
 			<svg id="chart-1" data-id="1" class="chart" width="1000px" height="500px">	
 				<div id="key-tip-1" class="semi-grey hidden"></div>
 			</svg>
 			<svg id="chart-2" data-id="2" class="chart" width="1000px" height="500px">	
 				<div id="key-tip-2" class="semi-grey hidden"></div>
 			</svg>
+			<div id="narration">
+			</div>
+			<div id="summary-slide" class="not-drawn">
+				<div>
+					<h2>In Summary</h2>
+					<div>
+						<div class="source-list">
+							<p>
+								The Affordable Care Act is a piece of health care legislation that aims to overhaul the health system by increasing the access to health coverage.
+							</p>
+						</div>
+						<div class="source-list">
+							<p>
+								It accomplishes this by: 
+							</p>
+							<ul>
+								<li>Requiring U.S. citizens and legal citizens to have qualifying health coverage (with a few exceptions) or pay a tax penalty.</li>
+								<li>Expanding Medicaid to those below 133% of the poverty level</li>
+								<li>The creation of state-based exchanges where coverage policies can be purchased.</li>
+								<li>Addition of requirements and tax incentives for employers to offer health insurance to full-time employees.</li>
+								<li>Prohibiting denial of coverage based on pre-existing conditions</li>
+								<li>Allowing depdendents up to age 26 to stay on their parent's health insurance</li>
+							</ul>
+						</div>
+						<div class="source-list">
+							<p>
+								It was signed into law in March of 2010 by President Barack Obama.
+							</p>
+							<p>
+								However, most of the major provisions specified above were not implemented until January 1st, 2014.
+							</p>
+							<p>
+							So the ACA technically happened in 2010, but it would be correft to state that it truly came into effect in 2014.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="source-list">
+					<h2>Thanks for sticking around!</h2>
+					<!-- todo - need to make this send the viz back to the beginning with an onclick -->
+					<div class="source"><a href="#" target="_blank" onclick="reinitialize();">Back to Beginning</a></div>
+				</div>
+				<div>
+					<div class="source-list">
+						<h3>Sources</h3>
+						<div class="source"><a href="https://www.cdc.gov/nchs/nhis/releases/released201709.htm" target="_blank">National Health Survey</a></div>
+						<div class="source"><a href="https://data.bls.gov" target="_blank">Bureau of Labor Statistics</a></div>
+						<div class="source"><a href="https://www.consumerreports.org/personal-bankruptcy/how-the-aca-drove-down-personal-bankruptcy/" target="_blank">Consumer Reports</a></div>
+						<div class="source"><a href="https://resources.ehealthinsurance.com/affordable-care-act/history-timeline-affordable-care-act-aca" target="_blank">eHealth Insurance</a></div>
+						<div class="source"><a href="http://affordablehealthca.com/timeline-obamacare/" target="_blank">Affordable Healthcare CA</a></div>
+						<div class="source"><a href="https://www.npr.org/sections/health-shots/2017/12/13/570479181/why-do-so-many-people-hate-obamacare-so-much" target="_blank">NPR</a></div>
+					</div>
+				</div>
+			</div>
+			<div id="top-grad" class="gradient-top">
+			</div>
+			<div id="middle-grad" class="gradient-top not-drawn">
+			</div>
+			<div id="footer-grad" class="gradient-bottom">
+			</div>
 		</div>
 	</div>
 	<div id="tip" class="semi-grey tip hidden"></div>
@@ -234,6 +105,7 @@
 	<script>
 		var chartParams1;
 		var chartParams2;
+		//todo - move into datapoint.js, no need to init here.
 		window.addEventListener("load", function(event) {
 			var parent = document.getElementById('chart-1');
 			chartParams1 = {};
