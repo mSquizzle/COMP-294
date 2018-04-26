@@ -1,6 +1,6 @@
 body {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	background-color:rgb(100,100,100);
+	background-color:rgb(75,100,100);
 	margin:0;
 }
 h1 {
@@ -59,7 +59,7 @@ line.axis{
 	top: 0; 
 	z-index:-1;
 	margin:20px;
-	color: rgb(100,100,100);
+	color: rgb(75,75,75);
 }
 
 line {
@@ -149,24 +149,34 @@ polygon{
 	pointer-events: none;
 	z-index: 10;
 }
-rect {
-	stroke: black !important; 
+svg.key > rect {
+	stroke: black; 
 	stroke-width: 2;
-	-webkit-animation: crossanimate 1s;  
+	/*-webkit-animation: crossanimate 1s;  
 	-webkit-animation-iteration-count: infinite;
 	animation: crossanimate 1s;
 	animation-iteration-count: infinite
 	-webkit-animation: crossanimate 1s;  
 	-webkit-animation-iteration-count: infinite;
 	animation: crossanimate 1s;
-	animation-iteration-count: infinite;
+	animation-iteration-count: infinite;*/
 }
 path.cross {
-	stroke: black !important; 
+	stroke: black; 
 	stroke-width: 2;
 	pointer-events:none;
 }
 
+svg.key > rect:hover, svg.key > rect:hover + path.cross {
+	stroke:white;
+	stroke-width:2;
+}
+
+rect.hidesib + path.cross{
+	display:none;
+}
+
+/*
 rect.key:hover, rect.key:hover + path.cross{
 	-webkit-animation: mymove 1s;
 	-webkit-animation-iteration-count: infinite;
@@ -174,8 +184,12 @@ rect.key:hover, rect.key:hover + path.cross{
 	animation-iteration-count: infinite;
 }
 
-rect.hidesib + path.cross{
-	display:none;
+
+svg.key:hover > path, svg.key:hover > rect{
+	-webkit-animation: mymove 1s;
+	-webkit-animation-iteration-count: infinite;
+	animation: mymove 1s;
+	animation-iteration-count: infinite;
 }
 
 @-webkit-keyframes mymove {
@@ -199,6 +213,8 @@ rect.hidesib + path.cross{
 		stroke-width:2;
 		}
 }	
+*/
+
 .pew {
 	fill : black !important;
 }

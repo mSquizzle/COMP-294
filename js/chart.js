@@ -228,6 +228,7 @@ function drawKey(keyX, keyY, series){
 	
 	key.setAttribute("x", keyX);
 	key.setAttribute("y", keyY);
+	key.setAttribute("class", "key");
 	key.appendChild(square);
 	key.appendChild(cross);
 	key.appendChild(label);
@@ -295,7 +296,7 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		circle.addEventListener("mouseenter", setToolTip);
 		circle.addEventListener("mouseleave", clearToolTip);
 		circle.addEventListener("mousemove", moveToolTip);
-		circleList.append(circle);	
+		circleList.append(circle);
 		circles.push(circle);
 	}
 	
