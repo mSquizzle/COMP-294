@@ -143,11 +143,10 @@ function handleFirstChart(){
 						state--;
 						for(var i = 0; i < firstChartGroup.length;i++){
 							nodeGroups[0][i].classList.add("not-drawn");
-							//circles[i].classList.add("not-drawn");
 						}
 						document.getElementById("narration").innerHTML = firstChartNarration[index-1];
 						return;
-					}				
+					}
 					nextNodes = nodeGroups[index];
 					previousLines = lineGroups[index-1];
 					for(var i = 0; i < firstChartGroup.length; i++){
@@ -176,6 +175,9 @@ function handleFirstChart(){
 						nextNodes = nodeGroups[index];
 						previousLines = lineGroups[index-1];
 						document.getElementById("narration").classList.add("not-drawn");
+						for(var i = 0; i < firstChartGroup.length; i++){
+							nodeGroups[index-1][i].classList.remove("not-drawn");
+						}
 						return;
 					}
 					for(var i = 0; i < firstChartGroup.length; i++){
@@ -217,7 +219,31 @@ function handleFirstChart(){
 			var narration = document.getElementById("narration");
 			var newTop = calculateNewTop(narration, pct);
 			narration.setAttribute("style", "top :"+newTop+"px");
-		}else if(state == 4){
+	}else if(state == 4){
+		if(e.keyCode == 37){
+			init-=5;
+			if(init < 0){
+				state--;
+				init = 100;
+				for(var i = 0; i < firstChartGroup.length; i++){
+					nodeGroups[index-1][i].classList.add("not-drawn");
+					circles[i].setAttribute("r", 5);
+				}
+				return;
+			}
+		} else if(e.keyCode == 39){
+			init+=5;
+			if(init > 100){
+				state++;
+				init = 0;
+				return;
+			}
+		}
+		var pct = init/100.0;
+		for(var i = 0; i < firstChartGroup.length; i++){
+			circles[i].setAttribute("r", 5 * (1.0-pct));
+		}
+	}else if(state == 5){
 			//move the first chart out
 			if(e.keyCode == 37){
 				init-=5;
@@ -246,7 +272,7 @@ function handleFirstChart(){
 			}	
 			var pct = init/100.0;
 			document.getElementById("chart-1").setAttribute("transform","translate("+ pct * -1000+")");
-		}else if(state == 5){
+		}else if(state == 6){
 			//move the second chart in
 			if(e.keyCode == 37){
 				init-=5;
@@ -276,7 +302,7 @@ function handleFirstChart(){
 			}
 			var pct = init/100.0;
 			document.getElementById("chart-2").setAttribute("transform","translate("+((1-pct)*1000)+")");
-		}else if(state == 6){
+		}else if(state == 7){
 			if(e.keyCode == 37){
 				init-=5;
 				if(init < 0){
@@ -299,7 +325,7 @@ function handleFirstChart(){
 			var narration = document.getElementById("narration");
 			var newTop = calculateNewTop(narration, pct);
 			narration.setAttribute("style", "top :"+newTop+"px");
-		}else if(state == 7){
+		}else if(state == 8){
 			if(e.keyCode == 37){
 				init-=5;
 				if(init < 0){
@@ -324,7 +350,7 @@ function handleFirstChart(){
 			}
 			var pct = init / 100.0;
 			document.getElementById("chart-2").setAttribute("transform","translate("+(-pct * 1000)+")");
-		}else if(state == 8){
+		}else if(state == 9){
 			if(e.keyCode == 37){
 				init-=5;
 				if(init < 0){
