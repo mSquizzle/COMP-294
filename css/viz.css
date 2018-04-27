@@ -1,6 +1,6 @@
 body {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	background-color:rgb(75,100,100);
+	background-color:rgb(150,150,150);
 	margin:0;
 }
 h1 {
@@ -16,7 +16,7 @@ h1 {
 	font-weight: unset
 }
 .grey {
-	background-color: rgb(100,100,100);
+	background-color: rgb(150,150,150);
 	color: white;
 }
 tspan {
@@ -40,7 +40,7 @@ line.axis{
 	font-size: 15px;
 }
 .semi-grey {
-	background-color: rgb(100,100,100,.875);
+	background-color: rgb(150,150,150,.875);
 	color: white;
 }
 .container {
@@ -109,8 +109,8 @@ line {
 	stroke : rgb(0, 0, 0);
 }
 .series-0 {
-	fill : rgb(37, 186, 44);
-	stroke : rgb(37, 186, 44);
+	fill : rgb(52, 200, 44);
+	stroke : rgb(52, 200, 44);
 }
 
 #chart-2 > .series-0 {
@@ -124,8 +124,8 @@ line {
 }
 
 .series-2 {
-	fill: rgb(41, 206, 0);
-	stroke: rgb(41, 206, 0);
+	fill: rgb(89, 152, 0);
+	stroke: rgb(89, 152, 0);
 }
 .series-3 {
 	fill: rgb(234, 255, 5);
@@ -168,7 +168,7 @@ path.cross {
 }
 
 svg.key > rect:hover, svg.key > rect:hover + path.cross {
-	stroke:white;
+	stroke: rgb(240,240,240);
 	stroke-width:2;
 }
 
@@ -219,7 +219,7 @@ svg.key:hover > path, svg.key:hover > rect{
 	fill : black !important;
 }
 #cover{
-	fill: rgb(100,100,100,1);
+	fill: rgb(150,150,150,1);
 	stroke-width: 0;
 	pointer-events:none;
 }
@@ -235,7 +235,7 @@ svg.chart{
 	  right:0;
 	  padding:none;
 	  z-index:10;
-	  background-color:rgb(100,100,100);
+	  background-color:rgb(150,150,150);
 }
 #container{
 	height:100vh;
@@ -276,7 +276,7 @@ svg.chart{
   100% { opacity: 1; }
 }
 #intro-slide{
-	background: rgb(100,100,100);
+	background: rgb(150,150,150);
 	position:absolute;
 	width:1000px;
 	top:0px;
@@ -310,12 +310,12 @@ svg.chart{
 	margin: 0;
 }
 .gradient-bottom{
-	background: linear-gradient(0deg, rgba(100,100,100,1) 0%, rgba(100,100,100,0)100%);
+	background: linear-gradient(0deg, rgba(150,150,150,1) 0%, rgba(150,150,150,0)100%);
 	width:1000px;
 	z-index:15;
 }
 .gradient-top{
-	background: linear-gradient(0deg, rgba(100,100,100,0) 0%, rgba(100,100,100,1)100%);
+	background: linear-gradient(0deg, rgba(150,150,150,0) 0%, rgba(150,150,150,1)100%);
 	width:1000px;
 	z-index:15;
 }
@@ -331,7 +331,7 @@ svg.chart{
 	position:absolute;
 }
 div.source {
-	background-color: rgb(0,150,150);
+	background-color: rgb(0,200,200);
 	text-decoration: none;
 }
 a {

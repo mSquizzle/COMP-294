@@ -96,12 +96,12 @@ function handleFirstChart(){
 						circles[i].classList.remove("not-drawn");
 						circles[i].setAttribute("r",0);
 					}
-					cover.setAttribute("style", "fill: rgb(100,100,100,0);");
+					cover.setAttribute("style", "fill: rgb(150,150,150,0);");
 					document.getElementById("narration").innerHTML = firstChartNarration[index-1];
 					return;
 				}
 			}
-			cover.setAttribute("style", "fill: rgb(100,100,100,"+(1-init/100)+");");
+			cover.setAttribute("style", "fill: rgb(150,150,150,"+(1-init/100)+");");
 		}else if(state == 2){
 			//continue to draw out first chart
 			if(e.keyCode == 37){
