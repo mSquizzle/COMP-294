@@ -174,7 +174,9 @@ function handleFirstChart(){
 						state++;
 						nextNodes = nodeGroups[index];
 						previousLines = lineGroups[index-1];
-						document.getElementById("narration").classList.add("not-drawn");
+						var narration = document.getElementById("narration")
+						narration.classList.add("not-drawn");
+						narration.innerHTML = "";
 						for(var i = 0; i < firstChartGroup.length; i++){
 							nodeGroups[index-1][i].classList.remove("not-drawn");
 						}
@@ -252,7 +254,7 @@ function handleFirstChart(){
 					init = 100;
 					document.getElementById("chart-1").setAttribute("transform","translate(0)");
 					var narration = document.getElementById("narration");
-					narration.innerHTML = firstChartNarration[index-1];
+					narration.innerHTML = "";
 					var pct = init/100.0;
 					var narration = document.getElementById("narration");
 					var newTop = calculateNewTop(narration, pct);
