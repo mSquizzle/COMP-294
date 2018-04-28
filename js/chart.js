@@ -178,7 +178,7 @@ function drawChart(chartParams, dataSet){
 
 //todo - make this a function we pass in or just make more generic
 function drawKeys(parentWidth, parentHeight){
-	var keyX = .75 * parentWidth + 10;
+	var keyX = .725 * parentWidth + 10;
 	var keyY = 50;
 	var keys = document.createDocumentFragment();
 	var uninsured = drawKey(keyX, keyY, "0");
@@ -207,19 +207,32 @@ function drawKey(keyX, keyY, series){
 	cross.setAttribute("y", 10);
 	cross.setAttribute("class", "cross");
 	label.setAttribute("x", 15);
-	label.setAttribute("y", 10);
+	label.setAttribute("y", 0);
+	label.setAttribute("alignment-baseline", "middle");
 	label.setAttribute("class", "key");
 	//label.innerHTML = keyLabels[series];
 	var innerText = keyLabels[series];
 	words = innerText.split("<br/>");
-	for(var i = 0; i < words.length; i++){
+	if(words.length > 1){
+		var startVal = words.length > 1 ? -4 : 0;
+		var offset = words.length > 1 ? 7 : 0;
+		for(var i = 0; i < words.length; i++){
+			var tspan = document.createElementNS(svgns, "tspan");
+			tspan.innerHTML = words[i];
+			tspan.setAttribute("dy", (i+1) * offset + startVal);
+			tspan.setAttribute("x", 15);
+			label.appendChild(tspan);
+		}
+	}else{
 		var tspan = document.createElementNS(svgns, "tspan");
-		tspan.innerHTML = words[i];
-		tspan.setAttribute("dy", i);
+		tspan.innerHTML = innerText;
+		tspan.setAttribute("dy", 8);
+		tspan.setAttribute("x", 15);
 		label.appendChild(tspan);
 	}
+	
 	square.setAttribute("width", 10);
-	square.setAttribute("height", 10);	
+	square.setAttribute("height", 10);
 	square.setAttribute("class", "hidesib series-"+series);
 	square.setAttribute("data-series", series);
 	square.addEventListener("mouseenter", setKeyToolTip);
