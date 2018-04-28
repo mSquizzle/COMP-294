@@ -149,9 +149,14 @@ polygon{
 	pointer-events: none;
 	z-index: 10;
 }
+
+svg.key{
+	overflow: visible;
+}
+
 svg.key > rect {
 	stroke: black; 
-	stroke-width: 2;
+	stroke-width: 1;
 	/*-webkit-animation: crossanimate 1s;  
 	-webkit-animation-iteration-count: infinite;
 	animation: crossanimate 1s;
@@ -306,7 +311,7 @@ svg.chart{
 	height: 75px;
 	width:1000px;
 	position: fixed;
-	top: 501px;
+	top: 500px;
 	margin: 0;
 }
 .gradient-bottom{
