@@ -17,7 +17,7 @@ function drawChart(chartParams, dataSet){
 	}
 	var rightAxis = parentWidth - leftAxis;
 	
-	var bottom = parentHeight * .9 ;
+	var bottom = parentHeight * .95 ;
 	var top = parentHeight - bottom;
 	
 	var chartDisplay = {};
