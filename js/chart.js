@@ -163,7 +163,7 @@ function drawChart(chartParams, dataSet){
 	});
 	
 	if(chartParams.drawKeys){
-		var keys = drawKeys(parentWidth, parentHeight);
+		var keys = drawKeys(parentWidth, parentHeight, chartParams);
 		chartParent.appendChild(keys);
 	}
 	if(chartParams.incrementalDraw){
@@ -177,16 +177,16 @@ function drawChart(chartParams, dataSet){
 }
 
 //todo - make this a function we pass in or just make more generic
-function drawKeys(parentWidth, parentHeight){
+function drawKeys(parentWidth, parentHeight, chartParams){
 	var keyX = .725 * parentWidth + 10;
 	var keyY = 50;
 	var keys = document.createDocumentFragment();
-	var uninsured = drawKey(keyX, keyY, "0");
-	var under65 = drawKey(keyX + 15, keyY+20, "1");
-	var adults = drawKey(keyX + 90, keyY+20, "2");
-	var children = drawKey(keyX + 150, keyY+20, "3");
-	var skippedCare = drawKey(keyX, keyY + 50, "4");
-	var unemployed = drawKey(keyX, keyY + 75, "5");
+	var uninsured = drawKey(keyX, keyY, 0, chartParams);
+	var under65 = drawKey(keyX + 15, keyY+20, 1, chartParams);
+	var adults = drawKey(keyX + 90, keyY+20, 2, chartParams);
+	var children = drawKey(keyX + 150, keyY+20, 3, chartParams);
+	var skippedCare = drawKey(keyX, keyY + 50, 4, chartParams);
+	var unemployed = drawKey(keyX, keyY + 75, 5, chartParams);
 	keys.append(uninsured);
 	keys.append(under65);
 	keys.append(adults);
@@ -196,7 +196,7 @@ function drawKeys(parentWidth, parentHeight){
 	return keys;
 }
 
-function drawKey(keyX, keyY, series){
+function drawKey(keyX, keyY, series, chartParams){
 	var key = document.createElementNS(svgns, "svg");
 	var square = document.createElementNS(svgns, "rect");
 	var label = document.createElementNS(svgns, "text");
@@ -210,8 +210,7 @@ function drawKey(keyX, keyY, series){
 	label.setAttribute("y", 0);
 	label.setAttribute("alignment-baseline", "middle");
 	label.setAttribute("class", "key");
-	//label.innerHTML = keyLabels[series];
-	var innerText = keyLabels[series];
+	var innerText = keyLabels[""+series];
 	words = innerText.split("<br/>");
 	if(words.length > 1){
 		var startVal = words.length > 1 ? -4 : 0;
@@ -233,7 +232,11 @@ function drawKey(keyX, keyY, series){
 	
 	square.setAttribute("width", 10);
 	square.setAttribute("height", 10);
-	square.setAttribute("class", "hidesib series-"+series);
+	if(chartParams.hideSeries && chartParams.hideSeries.indexOf(series) > -1){
+		square.setAttribute("class", "series-"+series);
+	}else{
+		square.setAttribute("class", "hidesib series-"+series);
+	}
 	square.setAttribute("data-series", series);
 	square.addEventListener("mouseenter", setKeyToolTip);
 	square.addEventListener("mouseleave", clearKey);
@@ -275,6 +278,9 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 	var initialClass = "series-";
 	if(chartParams.incrementalDraw){
 		initialClass = "not-drawn series-";
+	}
+	if(chartParams.hideSeries && chartParams.hideSeries.indexOf(id) > -1){
+		initialClass = "hidden "+initialClass;
 	}
 	circle.setAttribute("cx", startX);
 	circle.setAttribute("cy", startY);
@@ -330,18 +336,17 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		lineList.append(line);
 	}
 	if(chartParams.incrementalDraw){
+		var classBase = "series-"+id;
+		if(chartParams.hideSeries && chartParams.hideSeries.indexOf(id) > -1){
+			classBase = "hidden "+classBase;
+		}
 		var circle = document.createElementNS(svgns, "circle");
 		circle.setAttribute("cx", leftAxis);
 		startY = scale(dataPoints[0][1]);
 		circle.setAttribute("cy", startY);	
 		circle.setAttribute("data-series", id);
-		circle.setAttribute("class","series-"+id+" pew");
-		circle.setAttribute("id","series-"+id+"-circle");
-		//circle.setAttribute("data-label", dataPoints[0][0]);
-		//circle.setAttribute("data-val", formatter(dataPoints[0][1]));
-		//circle.addEventListener("mouseenter", setToolTip);
-		//circle.addEventListener("mouseleave", clearToolTip);
-		//circle.addEventListener("mousemove", moveToolTip);
+		circle.setAttribute("class", classBase+" pew");
+		circle.setAttribute("id", "series-"+id+"-circle");
 		circle.setAttribute("r", 5);
 		circleList.append(circle);
 		
@@ -350,7 +355,7 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		line.setAttribute("y1", startY);
 		line.setAttribute("x2", leftAxis);
 		line.setAttribute("y2", startY);
-		line.setAttribute("class","series-"+id);
+		line.setAttribute("class", classBase);
 		line.setAttribute("id","series-"+id+"-line");
 		line.setAttribute("data-series", id);
 		lineList.appendChild(line);
