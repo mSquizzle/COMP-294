@@ -100,9 +100,7 @@ var unemployed = {
     "2017": 4.1
 };
 
-//todo - combine into single object to represent state
-
-var chartTitles = {
+var firstChartTitles = {
 	"0" : "Uninsured Americans - All Ages",
 	"1" : "Uninsured Americans Under 65",
 	"2" : "Uninsured Americans 18-64",
@@ -243,7 +241,7 @@ var secondChartNarration = [
 
 
 
-
+/*
 
 function extractMax(dataSets){
 	var max = 0.0;
@@ -257,5 +255,5 @@ function extractMax(dataSets){
 	}
 	return max;
 };
-
+*/
 console.log("Data loaded.");
