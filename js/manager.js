@@ -292,7 +292,7 @@ function handleFirstChart(){
 				if(init > 100){
 					state++;
 					init = 0;
-					document.getElementById("middle-grad").classList.add("not-drawn");
+					//document.getElementById("middle-grad").classList.add("not-drawn");
 					document.getElementById("narration").innerHTML = secondChartNarration[0];
 					var pct = init/100.0;
 					var narration = document.getElementById("narration");
@@ -310,7 +310,7 @@ function handleFirstChart(){
 				if(init < 0){
 					state--;
 					init=100;
-					document.getElementById("middle-grad").classList.add("not-drawn");
+					//document.getElementById("middle-grad").classList.add("not-drawn");
 					document.getElementById("narration").classList.add("not-drawn");
 				}
 			}else if(e.keyCode == 39){
@@ -347,6 +347,7 @@ function handleFirstChart(){
 					summary.classList.remove("not-drawn");
 					var initTop = window.innerHeight;
 					summary.setAttribute("style", "top: "+initTop+"px");
+					document.getElementById("middle-grad").classList.add("not-drawn");
 					return;
 				}
 			}
@@ -362,6 +363,7 @@ function handleFirstChart(){
 					summary.classList.add("not-drawn");
 					var initTop = window.innerHeight;
 					summary.setAttribute("style", "top: "+initTop+"px");
+					document.getElementById("middle-grad").classList.remove("not-drawn");
 					return;
 				}
 			}else if(e.keyCode == 39){
