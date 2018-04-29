@@ -312,7 +312,7 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		circle.setAttribute("class",initialClass+id);
 		circle.setAttribute("data-label", dataPoints[i][0]);
 		circle.setAttribute("data-val", formatter(point[1]));
-		circle.addEventListener("mouseenter", setToolTip);
+		circle.addEventListener("mouseenter", setToolTip(chartParams.chartTitles));
 		circle.addEventListener("mouseleave", clearToolTip);
 		circle.addEventListener("mousemove", moveToolTip);
 		circleList.append(circle);
@@ -361,7 +361,12 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		lineList.appendChild(line);
 	}
 	chartParent.appendChild(lineList);
-	chartParent.appendChild(circleList);	
+	chartParent.appendChild(circleList);
+	if(!chartParams.incrementalDraw){
+		var line = document.createElementNS(svgns, "line");
+		line.setAttribute("class", "hidden");
+		chartParent.appendChild(line);
+	}
 };
 
 function handleKeyClick(event){
@@ -379,16 +384,23 @@ function handleKeyClick(event){
 	key.classList.toggle("hidesib");
 }
 
-function setToolTip(event){
-	var tip = document.getElementById("tip");
-	var data = event.target.dataset;
-	var series = data.series;
-	var seriesTitle = chartTitles[series];
-	tip.innerHTML = seriesTitle+"<br/>"+data.label +" - "+data.val;
-	console.log(event.x);
-	//set zIndex really high
-	tip.classList.toggle("hidden");
-	setStar(event.target);
+function setToolTip(chartTitles){
+	return function(event){
+		var tip = document.getElementById("tip");
+		var data = event.target.dataset;
+		var series = data.series;
+		var value = data.val;
+		if(chartTitles){
+			value = data.label +" - "+ value;
+			var seriesTitle = chartTitles[series];
+			value = seriesTitle+"<br/>" + value;
+		}
+		tip.innerHTML = value;
+		console.log(event.x);
+		//set zIndex really high
+		tip.classList.toggle("hidden");
+		setStar(event.target);
+	};
 };
 
 function setKeyToolTip(event){
