@@ -372,7 +372,7 @@ function handleFirstChart(){
 };
 
 function reinitialize(e){
-	e.preventDefault;
+	e.preventDefault();
 	//reset initial state
 	state = 0;
 	init = 0;
