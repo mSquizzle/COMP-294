@@ -4,7 +4,7 @@ This is my repository for COMP 294. The goal of this project is to convert an ex
 
 ## Updates
 
-- [Almost Complete Viz](https://msquizzle.github.io/COMP-294/chart-samples/viz.html)
+- [Complete Viz](https://msquizzle.github.io/COMP-294/chart-samples/viz.html)
 
 ## Remaining Tasks
 
@@ -22,6 +22,6 @@ This is my repository for COMP 294. The goal of this project is to convert an ex
 
 ### Overall
 
-- Minor bug fixes
-- Final Documentation
+- ~Minor bug fixes~
+- ~Final Documentation~
 

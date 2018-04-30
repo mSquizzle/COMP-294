@@ -239,21 +239,4 @@ var secondChartNarration = [
 
 ]
 
-
-
-/*
-
-function extractMax(dataSets){
-	var max = 0.0;
-	for(var i = 0; i < dataSets.length; i++){
-		var data = Object.entries(dataSets[i]);
-		for(var [key, value] of data){
-			if(max < value){
-				max = value;
-			}
-		}
-	}
-	return max;
-};
-*/
 console.log("Data loaded.");

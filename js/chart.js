@@ -229,14 +229,14 @@ function drawKey(keyX, keyY, series, chartParams){
 		tspan.setAttribute("x", 15);
 		label.appendChild(tspan);
 	}
-	
 	square.setAttribute("width", 10);
 	square.setAttribute("height", 10);
+	var initClass = "hidesib series-"+series;
 	if(chartParams.hideSeries && chartParams.hideSeries.indexOf(series) > -1){
-		square.setAttribute("class", "series-"+series);
-	}else{
-		square.setAttribute("class", "hidesib series-"+series);
+		initClass = "series-"+series;
 	}
+	square.setAttribute("class", initClass);
+	square.setAttribute("data-initclass", initClass);
 	square.setAttribute("data-series", series);
 	square.addEventListener("mouseenter", setKeyToolTip);
 	square.addEventListener("mouseleave", clearKey);
@@ -283,19 +283,19 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		initialClass = "hidden "+initialClass;
 	}
 	circle.setAttribute("cx", startX);
+	circle.setAttribute("data-initcx", startX);
 	circle.setAttribute("cy", startY);
+	circle.setAttribute("data-initcy", startY);
 	circle.setAttribute("r", 5);
 	circle.setAttribute("id","series-"+id+"-circle-"+0);
 	circle.setAttribute("data-series", id);
 	circle.setAttribute("class",initialClass+id);
+	circle.setAttribute("data-initclass",initialClass+id);
 	circle.setAttribute("data-label", dataPoints[0][0]);
 	circle.setAttribute("data-val", formatter(dataPoints[0][1]));
 	circle.addEventListener("mouseenter", setToolTip);
 	circle.addEventListener("mouseleave", clearToolTip);
 	circle.addEventListener("mousemove", moveToolTip);
-	//circleList.append(circle);
-	
-	//startX = startX + placementStep;
 	
 	var limit = dataPoints.length;
 	var circles = [];
@@ -310,6 +310,7 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		circle.setAttribute("id","series-"+id+"-circle-"+i);
 		circle.setAttribute("data-series", id);
 		circle.setAttribute("class",initialClass+id);
+		circle.setAttribute("data-initclass",initialClass+id);
 		circle.setAttribute("data-label", dataPoints[i][0]);
 		circle.setAttribute("data-val", formatter(point[1]));
 		circle.addEventListener("mouseenter", setToolTip(chartParams.chartTitles));
@@ -331,6 +332,7 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		line.setAttribute("x2", nextX);
 		line.setAttribute("y2", nextY);
 		line.setAttribute("class",initialClass+id);
+		line.setAttribute("data-initclass",initialClass+id);
 		line.setAttribute("id","series-"+id+"-line-"+(i-1));
 		line.setAttribute("data-series", id);	
 		lineList.append(line);
@@ -342,22 +344,30 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 		}
 		var circle = document.createElementNS(svgns, "circle");
 		circle.setAttribute("cx", leftAxis);
+		circle.setAttribute("data-initcx", leftAxis);
 		startY = scale(dataPoints[0][1]);
-		circle.setAttribute("cy", startY);	
+		circle.setAttribute("cy", startY);
+		circle.setAttribute("data-initcy", startY);
 		circle.setAttribute("data-series", id);
 		circle.setAttribute("class", classBase+" pew");
+		circle.setAttribute("data-initclass", classBase+" pew");
 		circle.setAttribute("id", "series-"+id+"-circle");
 		circle.setAttribute("r", 5);
 		circleList.append(circle);
 		
 		var line = document.createElementNS(svgns, "line");
 		line.setAttribute("x1", leftAxis);
+		line.setAttribute("data-initx1", ""+leftAxis);
 		line.setAttribute("y1", startY);
+		line.setAttribute("data-inity1", ""+startY);
 		line.setAttribute("x2", leftAxis);
+		line.setAttribute("data-initx2", ""+leftAxis);
 		line.setAttribute("y2", startY);
+		line.setAttribute("data-inity2", ""+startY);
 		line.setAttribute("class", classBase);
 		line.setAttribute("id","series-"+id+"-line");
 		line.setAttribute("data-series", id);
+		line.setAttribute("data-initclass", classBase);
 		lineList.appendChild(line);
 	}
 	chartParent.appendChild(lineList);
@@ -365,6 +375,7 @@ function drawSeries(chartParams, bottom, top, data, id, incrementalDraw){
 	if(!chartParams.incrementalDraw){
 		var line = document.createElementNS(svgns, "line");
 		line.setAttribute("class", "hidden");
+		line.setAttribute("data-initclass", "hidden");
 		chartParent.appendChild(line);
 	}
 };
@@ -396,8 +407,6 @@ function setToolTip(chartTitles){
 			value = seriesTitle+"<br/>" + value;
 		}
 		tip.innerHTML = value;
-		console.log(event.x);
-		//set zIndex really high
 		tip.classList.toggle("hidden");
 		setStar(event.target);
 	};
@@ -413,7 +422,6 @@ function setKeyToolTip(event){
 }
 
 function getFormatter(format){
-	console.log(format);
 	if(format === "percentage"){
 		return function(value){
 			return value + "%";
